@@ -12,61 +12,75 @@ namespace Engine {
         public int CardsInShoe { get; set; }
         public int CardsInPlay { get; set; }
         public int CardsInDiscard { get; set; }
-        private int Decks;
-        private int Suits;
+        private int NumDecks;
+        private int NumSuits;
         private int CardsPerSuit;
         //Defaults of a new deck are the standard shoe size for Black Jack
         public Shoe(int numDecks = 5, int numSuits = 4, int numCardsPerSuit = 13) {
-            Decks = numDecks;
-            Suits = numSuits;
+            NumDecks = numDecks;
+            NumSuits = numSuits;
             CardsPerSuit = numCardsPerSuit;
-            this.CardsInShoe = 0;
-            this.CardsInPlay = 0;
-            this.CardsInDiscard = 0;
-            BuildAndShuffle();
+            CardsInShoe = 0;
+            CardsInPlay = 0;
+            CardsInDiscard = 0;
+            BuildDecks();
         }
         //Function to build and shuffle the decks into the Shoe Queue
-        private void BuildAndShuffle() {
-            Deck[] CardDecks = new Deck[Decks];
-            for (int x = 0; x < CardDecks.Length; x++) {
-                CardDecks[x] = new Deck(Suits, CardsPerSuit);
+        private void BuildDecks() {
+            Deck[] cardDecks = new Deck[NumDecks];
+            for (int x = 0; x < cardDecks.Length; x++) {
+                cardDecks[x] = new Deck(NumSuits, CardsPerSuit);
             }
+            Shuffle(cardDecks);
+        }
+
+        private void Shuffle (Deck[] cardDecks) {
             //Make a random object with a date/time seed to create the random numbers
             //when shuffling the cards from 5 decks into a single Shoe object
             Random r = new Random((int)DateTime.Now.Ticks);
-            int shuffleCard = r.Next(CardsPerSuit * Suits);
-            int shuffleDeck = r.Next(Decks);
-            while (DrawPile.Count < (CardsPerSuit * Suits) * Decks) {
+            int shuffleCard = r.Next(CardsPerSuit * NumSuits);
+            int shuffleDeck = r.Next(NumDecks);
+            while (DrawPile.Count < (CardsPerSuit * NumSuits) * NumDecks) {
                 //check to see if the card has been drawn from the deck and add it to the shoe
-                if (CardDecks[shuffleDeck].CheckDraw(shuffleCard)) {
-                    DrawPile.Enqueue(CardDecks[shuffleDeck].Draw(shuffleCard));
+                if (cardDecks[shuffleDeck].CheckDraw(shuffleCard)) {
+                    DrawPile.Enqueue(cardDecks[shuffleDeck].Draw(shuffleCard));
                     this.CardsInShoe++;
                 }
-                shuffleCard = r.Next(CardsPerSuit * Suits);
-                shuffleDeck = r.Next(Decks);
+                shuffleCard = r.Next(CardsPerSuit * NumSuits);
+                shuffleDeck = r.Next(NumDecks);
             }
         }
         //clear out all sequences and reshuffle the Shoe.
         public void Reshuffle() {
-            this.CardsInShoe = 0;
+            CardsInShoe = 0;
             DrawPile.Clear();
-            this.CardsInPlay = 0;
+            CardsInPlay = 0;
             InPlay.Clear();
-            this.CardsInDiscard = 0;
+            CardsInDiscard = 0;
             DiscardPile.Clear();
-            BuildAndShuffle();
+            BuildDecks();
+        }
+        public void Reshuffle(int numDecks) {
+            NumDecks = numDecks;
+            CardsInShoe = 0;
+            DrawPile.Clear();
+            CardsInPlay = 0;
+            InPlay.Clear();
+            CardsInDiscard = 0;
+            DiscardPile.Clear();
+            BuildDecks();
         }
         //return the # of Cards each deck in the current Shoe contains
         public int GetCardsPerDeck() {
-            return (CardsPerSuit * Suits);
+            return (CardsPerSuit * NumSuits);
         }
         //return the # of Decks used in the current Shoe
         public int GetDecks() {
-            return Decks;
+            return NumDecks;
         }
         //return the # of Suits used in the current Shoe
         public int GetSuits() {
-            return Suits;
+            return NumSuits;
         }
         //draw the top card off out of the Shoe Queue and place it in the InPlay sequence
         public Card Deal() {

@@ -9,3 +9,14 @@ c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWF
 c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.csproj.GenerateResource.Cache
 c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.exe
 c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.pdb
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\bin\Debug\BlackjackWFA.exe.config
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.exe
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.pdb
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\bin\Debug\BlackjackWFA.exe
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\bin\Debug\BlackjackWFA.pdb
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\bin\Debug\Engine.dll
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\bin\Debug\Engine.pdb
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.csprojResolveAssemblyReference.cache
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.Blackjack.resources
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.Properties.Resources.resources
+C:\Users\Joe\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.csproj.GenerateResource.Cache

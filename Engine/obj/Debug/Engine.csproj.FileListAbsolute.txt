@@ -3,3 +3,8 @@ c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\Engine\bin\
 c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
 c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\Engine\obj\Debug\Engine.dll
 c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\Engine\obj\Debug\Engine.pdb
+C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\bin\Debug\Engine.dll
+C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\bin\Debug\Engine.pdb
+C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
+C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.dll
+C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.pdb
