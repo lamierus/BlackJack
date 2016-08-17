@@ -1,0 +1,11 @@
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\bin\Debug\BlackjackWFA.exe.config
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\bin\Debug\BlackjackWFA.exe
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\bin\Debug\BlackjackWFA.pdb
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\bin\Debug\Engine.dll
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\bin\Debug\Engine.pdb
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.csprojResolveAssemblyReference.cache
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.Blackjack.resources
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.Properties.Resources.resources
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.csproj.GenerateResource.Cache
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.exe
+c:\users\simon.je\documents\visual studio 2015\Projects\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.pdb
