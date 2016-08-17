@@ -26,6 +26,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Blackjack));
             this.btnHit = new System.Windows.Forms.Button();
             this.btnStand = new System.Windows.Forms.Button();
+            this.btnQuit = new System.Windows.Forms.Button();
+            this.lblDecks = new System.Windows.Forms.Label();
+            this.cbDecks = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // btnHit
@@ -46,18 +49,54 @@
             this.btnStand.Text = "Stand";
             this.btnStand.UseVisualStyleBackColor = true;
             // 
+            // btnQuit
+            // 
+            this.btnQuit.Location = new System.Drawing.Point(324, 647);
+            this.btnQuit.Name = "btnQuit";
+            this.btnQuit.Size = new System.Drawing.Size(128, 23);
+            this.btnQuit.TabIndex = 2;
+            this.btnQuit.Text = "Quit";
+            this.btnQuit.UseVisualStyleBackColor = true;
+            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+            // 
+            // lblDecks
+            // 
+            this.lblDecks.AutoSize = true;
+            this.lblDecks.Location = new System.Drawing.Point(324, 590);
+            this.lblDecks.Name = "lblDecks";
+            this.lblDecks.Size = new System.Drawing.Size(129, 13);
+            this.lblDecks.TabIndex = 3;
+            this.lblDecks.Text = "Number of Decks in Shoe";
+            // 
+            // cbDecks
+            // 
+            this.cbDecks.FormattingEnabled = true;
+            this.cbDecks.Location = new System.Drawing.Point(324, 606);
+            this.cbDecks.Name = "cbDecks";
+            this.cbDecks.Size = new System.Drawing.Size(128, 21);
+            this.cbDecks.TabIndex = 4;
+            this.cbDecks.Text = "# of Decks";
+            this.cbDecks.SelectedIndexChanged += new System.EventHandler(this.cbDecks_SelectedIndexChanged);
+            // 
             // Blackjack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 682);
+            this.Controls.Add(this.cbDecks);
+            this.Controls.Add(this.lblDecks);
+            this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnStand);
             this.Controls.Add(this.btnHit);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(480, 720);
+            this.MinimumSize = new System.Drawing.Size(480, 720);
             this.Name = "Blackjack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Blackjack";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -65,6 +104,9 @@
 
         private System.Windows.Forms.Button btnHit;
         private System.Windows.Forms.Button btnStand;
+        private System.Windows.Forms.Button btnQuit;
+        private System.Windows.Forms.Label lblDecks;
+        private System.Windows.Forms.ComboBox cbDecks;
     }
 }
 

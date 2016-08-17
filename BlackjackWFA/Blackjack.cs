@@ -15,9 +15,11 @@ namespace BlackjackWFA {
         static BJPlayer Player1;
         static BJDealer Dealer;
         static bool PlayGame;
+        List<int> DeckSize = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
         public Blackjack() {
             InitializeComponent();
+            cbDecks.DataSource = DeckSize;
         }
 
         /*static void Main(string[] args) {
@@ -139,6 +141,7 @@ namespace BlackjackWFA {
             }
             DisplayHands();
         }
+
         //draw the hands on the console
         static void DisplayHands() {
             Console.Clear();
@@ -156,6 +159,7 @@ namespace BlackjackWFA {
                 Console.WriteLine(Player1.Name + " busted!");
             }
         }
+
         //logic to perform the player's turn
         static void PlayerTurn() {
             if (Player1.Score > 21) {
@@ -166,7 +170,7 @@ namespace BlackjackWFA {
                 Player1.Stand = true;
                 return;
             }
-            bool done = false;
+            /*bool done = false;
             do {
                 Console.WriteLine();
                 Console.WriteLine("(H)it or (S)tand?");
@@ -178,8 +182,9 @@ namespace BlackjackWFA {
                     Player1.Draw(drawPile.Deal());
                     done = true;
                 }
-            } while (!done);
+            } while (!done);*/
         }
+
         //logic to perform the dealer's turn
         static void DealerTurn() {
             if (Dealer.Score > 21) {
@@ -192,6 +197,7 @@ namespace BlackjackWFA {
             }
             Dealer.Draw(drawPile.Deal());
         }
+
         //find out who won the hand
         static bool CheckWinner() {
             if (!Player1.Bust) {
@@ -207,13 +213,13 @@ namespace BlackjackWFA {
             }
             return false;
         }
-        /*//leave the game, when done playing.
-        static void Quit() {
-            Console.Clear();
-            Console.ResetColor();
-            Console.WriteLine("Thanks for playing!");
-            Console.ReadKey(true);
+
+        private void cbDecks_SelectedIndexChanged(object sender, EventArgs e) {
+            drawPile = new Shoe((int)cbDecks.SelectedItem);
+        }
+
+        private void btnQuit_Click(object sender, EventArgs e) {
             Environment.Exit(0);
-        }*/
+        }
     }
 }

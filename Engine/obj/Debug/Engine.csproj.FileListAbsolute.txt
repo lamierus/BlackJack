@@ -8,3 +8,8 @@ C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\bin\Debug\Engine.pdb
 C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
 C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.dll
 C:\Users\Joe\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.pdb
+C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\bin\Debug\Engine.dll
+C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\bin\Debug\Engine.pdb
+C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
+C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.dll
+C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.pdb
