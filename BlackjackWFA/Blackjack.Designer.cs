@@ -29,6 +29,10 @@
             this.btnQuit = new System.Windows.Forms.Button();
             this.lblDecks = new System.Windows.Forms.Label();
             this.cbDecks = new System.Windows.Forms.ComboBox();
+            this.lblDealerHand = new System.Windows.Forms.Label();
+            this.rtbDealer = new System.Windows.Forms.RichTextBox();
+            this.lblPlayerHand = new System.Windows.Forms.Label();
+            this.rtbPlayer = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // btnHit
@@ -39,6 +43,7 @@
             this.btnHit.TabIndex = 0;
             this.btnHit.Text = "Hit";
             this.btnHit.UseVisualStyleBackColor = true;
+            this.btnHit.Click += new System.EventHandler(this.btnHit_Click);
             // 
             // btnStand
             // 
@@ -48,6 +53,7 @@
             this.btnStand.TabIndex = 1;
             this.btnStand.Text = "Stand";
             this.btnStand.UseVisualStyleBackColor = true;
+            this.btnStand.Click += new System.EventHandler(this.btnStand_Click);
             // 
             // btnQuit
             // 
@@ -78,11 +84,59 @@
             this.cbDecks.Text = "# of Decks";
             this.cbDecks.SelectedIndexChanged += new System.EventHandler(this.cbDecks_SelectedIndexChanged);
             // 
+            // lblDealerHand
+            // 
+            this.lblDealerHand.AutoSize = true;
+            this.lblDealerHand.Location = new System.Drawing.Point(9, 9);
+            this.lblDealerHand.Name = "lblDealerHand";
+            this.lblDealerHand.Size = new System.Drawing.Size(74, 13);
+            this.lblDealerHand.TabIndex = 5;
+            this.lblDealerHand.Text = "Dealer\'s Hand";
+            // 
+            // rtbDealer
+            // 
+            this.rtbDealer.BackColor = System.Drawing.SystemColors.Window;
+            this.rtbDealer.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbDealer.Location = new System.Drawing.Point(12, 25);
+            this.rtbDealer.Name = "rtbDealer";
+            this.rtbDealer.ReadOnly = true;
+            this.rtbDealer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbDealer.Size = new System.Drawing.Size(440, 265);
+            this.rtbDealer.TabIndex = 6;
+            this.rtbDealer.TabStop = false;
+            this.rtbDealer.Text = "";
+            // 
+            // lblPlayerHand
+            // 
+            this.lblPlayerHand.AutoSize = true;
+            this.lblPlayerHand.Location = new System.Drawing.Point(9, 300);
+            this.lblPlayerHand.Name = "lblPlayerHand";
+            this.lblPlayerHand.Size = new System.Drawing.Size(72, 13);
+            this.lblPlayerHand.TabIndex = 7;
+            this.lblPlayerHand.Text = "Player\'s Hand";
+            // 
+            // rtbPlayer
+            // 
+            this.rtbPlayer.BackColor = System.Drawing.SystemColors.Window;
+            this.rtbPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtbPlayer.Location = new System.Drawing.Point(12, 316);
+            this.rtbPlayer.Name = "rtbPlayer";
+            this.rtbPlayer.ReadOnly = true;
+            this.rtbPlayer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.rtbPlayer.Size = new System.Drawing.Size(440, 265);
+            this.rtbPlayer.TabIndex = 8;
+            this.rtbPlayer.TabStop = false;
+            this.rtbPlayer.Text = "";
+            // 
             // Blackjack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 682);
+            this.Controls.Add(this.rtbPlayer);
+            this.Controls.Add(this.lblPlayerHand);
+            this.Controls.Add(this.rtbDealer);
+            this.Controls.Add(this.lblDealerHand);
             this.Controls.Add(this.cbDecks);
             this.Controls.Add(this.lblDecks);
             this.Controls.Add(this.btnQuit);
@@ -107,6 +161,10 @@
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Label lblDecks;
         private System.Windows.Forms.ComboBox cbDecks;
+        private System.Windows.Forms.Label lblDealerHand;
+        private System.Windows.Forms.RichTextBox rtbDealer;
+        private System.Windows.Forms.Label lblPlayerHand;
+        private System.Windows.Forms.RichTextBox rtbPlayer;
     }
 }
 

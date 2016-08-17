@@ -8,6 +8,7 @@ namespace Engine {
     public class Hand {
         public string Name { get; set; }
         public int Score { get; set; }
+        public int CardsInHand { get; set; }
         public static int Count = 0;
         protected List<Card> InHand = new List<Card>();
         //initialize a basic player
@@ -19,6 +20,7 @@ namespace Engine {
             } else {
                 Name = name;
             }
+            CardsInHand = 0;
             Count++;
         }
         ~Hand() {
@@ -48,12 +50,14 @@ namespace Engine {
         //add a card to the user's hand list
         public void Draw(Card card) {
             InHand.Add(card);
+            CardsInHand++;
             ScoreHand();
         }
         //remove a card from the user's hand.
         public bool Discard(Card disc) {
             if (InHand.Remove(disc)) {
                 Score -= disc.Number;
+                CardsInHand--;
                 return true;
             }
             return false;
@@ -72,6 +76,7 @@ namespace Engine {
         public void ClearHand() {
             InHand.Clear();
             Score = 0;
+            CardsInHand = 0;
         }
         //return the current number of Players in the game.
         public int NumOfPlayers() {

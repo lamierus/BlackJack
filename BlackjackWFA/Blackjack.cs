@@ -12,14 +12,16 @@ using Engine;
 namespace BlackjackWFA {
     public partial class Blackjack : Form {
         static Shoe drawPile;
-        static BJPlayer Player1;
-        static BJDealer Dealer;
-        static bool PlayGame;
+        static BJPlayer Player1 = new BJPlayer();
+        static BJDealer Dealer = new BJDealer();
+        //static bool PlayGame;
         List<int> DeckSize = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
         public Blackjack() {
             InitializeComponent();
             cbDecks.DataSource = DeckSize;
+            cbDecks.SelectedIndex = 4;
+            StartGame();
         }
 
         /*static void Main(string[] args) {
@@ -134,7 +136,7 @@ namespace BlackjackWFA {
             Quit();
         }*/
         //function to start up the game with the initial draws for each player.
-        static void StartGame() {
+        private void StartGame() {
             for (int x = 0; x < 2; x++) {
                 Player1.Draw(drawPile.Deal());
                 Dealer.Draw(drawPile.Deal());
@@ -143,25 +145,21 @@ namespace BlackjackWFA {
         }
 
         //draw the hands on the console
-        static void DisplayHands() {
-            Console.Clear();
-            Console.WriteLine(Dealer.Name + "'s Hand");
-            if (!Player1.Stand) {
-                Dealer.ConsoleFlop();
-            } else {
-                Dealer.ConsoleFlop();
-            }
-            Console.WriteLine();
-            Console.WriteLine(Player1.Name + "'s Hand");
+        private void DisplayHands() {
+            //rtbDealer.Clear();
+            rtbDealer.Text = Dealer.Flop() + Environment.NewLine + rtbDealer.Text;
+            //rtbPlayer.Clear();
+            rtbPlayer.Text = Player1.Flop() + Environment.NewLine + rtbPlayer.Text;
+            /*Console.WriteLine(Player1.Name + "'s Hand");
             Player1.ConsoleFlop();
             if (Player1.Bust) {
                 Console.WriteLine();
                 Console.WriteLine(Player1.Name + " busted!");
-            }
+            }*/
         }
 
         //logic to perform the player's turn
-        static void PlayerTurn() {
+        private void PlayerTurn() {
             if (Player1.Score > 21) {
                 Player1.Bust = true;
                 return;
@@ -186,7 +184,7 @@ namespace BlackjackWFA {
         }
 
         //logic to perform the dealer's turn
-        static void DealerTurn() {
+        private void DealerTurn() {
             if (Dealer.Score > 21) {
                 Dealer.Bust = true;
                 return;
@@ -199,7 +197,7 @@ namespace BlackjackWFA {
         }
 
         //find out who won the hand
-        static bool CheckWinner() {
+        private bool CheckWinner() {
             if (!Player1.Bust) {
                 if (Dealer.Bust) {
                     return true;
@@ -216,10 +214,19 @@ namespace BlackjackWFA {
 
         private void cbDecks_SelectedIndexChanged(object sender, EventArgs e) {
             drawPile = new Shoe((int)cbDecks.SelectedItem);
+            //StartGame();
         }
 
         private void btnQuit_Click(object sender, EventArgs e) {
             Environment.Exit(0);
+        }
+
+        private void btnHit_Click(object sender, EventArgs e) {
+
+        }
+
+        private void btnStand_Click(object sender, EventArgs e) {
+            Player1.Stand = true;
         }
     }
 }

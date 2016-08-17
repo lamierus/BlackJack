@@ -51,6 +51,17 @@ namespace Engine {
                 }
             }
         }
+
+        //display the Players's hand.
+        public string Flop() {
+            string output = "";
+            foreach (Card card in InHand) {
+                output += card.ToString() + Environment.NewLine;
+            }
+            output += Environment.NewLine + "Score: " + Score.ToString();
+            return output;
+        }
+
         //empty out the hand and reset the boolean properties.
         new public void ClearHand() {
             InHand.Clear();
