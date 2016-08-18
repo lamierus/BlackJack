@@ -144,6 +144,7 @@ namespace BlackjackWFA {
                 Dealer.Draw(drawPile.Deal());
             }
             DisplayHands();
+            //bgwDealer.RunWorkerAsync();
         }
 
         //draw the hands on the console
@@ -152,12 +153,13 @@ namespace BlackjackWFA {
             rtbDealer.Text = Dealer.Flop();
             rtbPlayer.Clear();
             rtbPlayer.Text = Player1.Flop();
-            /*Console.WriteLine(Player1.Name + "'s Hand");
-            Player1.ConsoleFlop();
             if (Player1.Bust) {
-                Console.WriteLine();
-                Console.WriteLine(Player1.Name + " busted!");
-            }*/
+                //Console.WriteLine();
+                //Console.WriteLine(Player1.Name + " busted!");
+                rtbPlayer.Text += Environment.NewLine +  Player1.Name + " busted!";
+            } else if (Player1.Stand) {
+                rtbPlayer.Text += Environment.NewLine + Player1.Name + " stands.";
+            }
         }
 
         //logic to perform the player's turn
@@ -170,19 +172,7 @@ namespace BlackjackWFA {
                 Player1.Stand = true;
                 return;
             }
-            /*bool done = false;
-            do {
-                Console.WriteLine();
-                Console.WriteLine("(H)it or (S)tand?");
-                string input = Console.ReadKey().KeyChar.ToString();
-                if (input.ToLower() == "s") {
-                    Player1.Stand = true;
-                    done = true;
-                } else if (input.ToLower() == "h") {
-                    Player1.Draw(drawPile.Deal());
-                    done = true;
-                }
-            } while (!done);*/
+            Player1.Draw(drawPile.Deal());
         }
 
         //logic to perform the dealer's turn
@@ -199,24 +189,22 @@ namespace BlackjackWFA {
         }
 
         //find out who won the hand
-        private bool CheckWinner() {
+        private void CheckWinner() {
             if (!Player1.Bust) {
                 if (Dealer.Bust) {
-                    return true;
+                    //return true;
                 } else if (Dealer.Score < Player1.Score) {
-                    return true;
+                    //return true;
                 } else if (Player1.Score == 21 && Dealer.Score == 21) {
-                    return false;
+                    //return false;
                 } else if (Player1.Score == 21) {
-                    return true;
+                    //return true;
                 }
             }
-            return false;
         }
 
         private void cbDecks_SelectedIndexChanged(object sender, EventArgs e) {
             drawPile = new Shoe((int)cbDecks.SelectedItem);
-
             StartGame();
         }
 
@@ -225,13 +213,25 @@ namespace BlackjackWFA {
         }
 
         private void btnHit_Click(object sender, EventArgs e) {
-            Player1.Draw(drawPile.Deal());
+            PlayerTurn();
             rtbPlayer.Clear();
             rtbPlayer.Text = Player1.Flop();
         }
 
         private void btnStand_Click(object sender, EventArgs e) {
             Player1.Stand = true;
+        }
+
+        private void bgwDealer_DoWork(object sender, DoWorkEventArgs e) {
+            if (Dealer.Bust || Dealer.Stand) {
+                e.Cancel = true;
+            } else if (Player1.Bust || Player1.Stand) {
+                DealerTurn();
+            }
+        }
+
+        private void bgwDealer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            CheckWinner();
         }
     }
 }
