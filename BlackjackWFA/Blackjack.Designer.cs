@@ -37,9 +37,10 @@
             // 
             // btnHit
             // 
-            this.btnHit.Location = new System.Drawing.Point(12, 590);
+            this.btnHit.Location = new System.Drawing.Point(18, 908);
+            this.btnHit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnHit.Name = "btnHit";
-            this.btnHit.Size = new System.Drawing.Size(150, 80);
+            this.btnHit.Size = new System.Drawing.Size(225, 123);
             this.btnHit.TabIndex = 0;
             this.btnHit.Text = "Hit";
             this.btnHit.UseVisualStyleBackColor = true;
@@ -47,9 +48,10 @@
             // 
             // btnStand
             // 
-            this.btnStand.Location = new System.Drawing.Point(168, 590);
+            this.btnStand.Location = new System.Drawing.Point(252, 908);
+            this.btnStand.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStand.Name = "btnStand";
-            this.btnStand.Size = new System.Drawing.Size(150, 80);
+            this.btnStand.Size = new System.Drawing.Size(225, 123);
             this.btnStand.TabIndex = 1;
             this.btnStand.Text = "Stand";
             this.btnStand.UseVisualStyleBackColor = true;
@@ -57,9 +59,10 @@
             // 
             // btnQuit
             // 
-            this.btnQuit.Location = new System.Drawing.Point(324, 647);
+            this.btnQuit.Location = new System.Drawing.Point(486, 995);
+            this.btnQuit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(128, 23);
+            this.btnQuit.Size = new System.Drawing.Size(192, 35);
             this.btnQuit.TabIndex = 2;
             this.btnQuit.Text = "Quit";
             this.btnQuit.UseVisualStyleBackColor = true;
@@ -68,18 +71,21 @@
             // lblDecks
             // 
             this.lblDecks.AutoSize = true;
-            this.lblDecks.Location = new System.Drawing.Point(324, 590);
+            this.lblDecks.Location = new System.Drawing.Point(486, 908);
+            this.lblDecks.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDecks.Name = "lblDecks";
-            this.lblDecks.Size = new System.Drawing.Size(129, 13);
+            this.lblDecks.Size = new System.Drawing.Size(190, 20);
             this.lblDecks.TabIndex = 3;
             this.lblDecks.Text = "Number of Decks in Shoe";
             // 
             // cbDecks
             // 
             this.cbDecks.FormattingEnabled = true;
-            this.cbDecks.Location = new System.Drawing.Point(324, 606);
+            this.cbDecks.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.cbDecks.Location = new System.Drawing.Point(486, 932);
+            this.cbDecks.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cbDecks.Name = "cbDecks";
-            this.cbDecks.Size = new System.Drawing.Size(128, 21);
+            this.cbDecks.Size = new System.Drawing.Size(190, 28);
             this.cbDecks.TabIndex = 4;
             this.cbDecks.Text = "# of Decks";
             this.cbDecks.SelectedIndexChanged += new System.EventHandler(this.cbDecks_SelectedIndexChanged);
@@ -87,9 +93,10 @@
             // lblDealerHand
             // 
             this.lblDealerHand.AutoSize = true;
-            this.lblDealerHand.Location = new System.Drawing.Point(9, 9);
+            this.lblDealerHand.Location = new System.Drawing.Point(14, 14);
+            this.lblDealerHand.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDealerHand.Name = "lblDealerHand";
-            this.lblDealerHand.Size = new System.Drawing.Size(74, 13);
+            this.lblDealerHand.Size = new System.Drawing.Size(110, 20);
             this.lblDealerHand.TabIndex = 5;
             this.lblDealerHand.Text = "Dealer\'s Hand";
             // 
@@ -97,11 +104,12 @@
             // 
             this.rtbDealer.BackColor = System.Drawing.SystemColors.Window;
             this.rtbDealer.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDealer.Location = new System.Drawing.Point(12, 25);
+            this.rtbDealer.Location = new System.Drawing.Point(18, 38);
+            this.rtbDealer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rtbDealer.Name = "rtbDealer";
             this.rtbDealer.ReadOnly = true;
             this.rtbDealer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbDealer.Size = new System.Drawing.Size(440, 265);
+            this.rtbDealer.Size = new System.Drawing.Size(658, 406);
             this.rtbDealer.TabIndex = 6;
             this.rtbDealer.TabStop = false;
             this.rtbDealer.Text = "";
@@ -109,9 +117,10 @@
             // lblPlayerHand
             // 
             this.lblPlayerHand.AutoSize = true;
-            this.lblPlayerHand.Location = new System.Drawing.Point(9, 300);
+            this.lblPlayerHand.Location = new System.Drawing.Point(14, 462);
+            this.lblPlayerHand.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblPlayerHand.Name = "lblPlayerHand";
-            this.lblPlayerHand.Size = new System.Drawing.Size(72, 13);
+            this.lblPlayerHand.Size = new System.Drawing.Size(106, 20);
             this.lblPlayerHand.TabIndex = 7;
             this.lblPlayerHand.Text = "Player\'s Hand";
             // 
@@ -119,20 +128,21 @@
             // 
             this.rtbPlayer.BackColor = System.Drawing.SystemColors.Window;
             this.rtbPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbPlayer.Location = new System.Drawing.Point(12, 316);
+            this.rtbPlayer.Location = new System.Drawing.Point(18, 486);
+            this.rtbPlayer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.rtbPlayer.Name = "rtbPlayer";
             this.rtbPlayer.ReadOnly = true;
             this.rtbPlayer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbPlayer.Size = new System.Drawing.Size(440, 265);
+            this.rtbPlayer.Size = new System.Drawing.Size(658, 406);
             this.rtbPlayer.TabIndex = 8;
             this.rtbPlayer.TabStop = false;
             this.rtbPlayer.Text = "";
             // 
             // Blackjack
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 682);
+            this.ClientSize = new System.Drawing.Size(687, 1022);
             this.Controls.Add(this.rtbPlayer);
             this.Controls.Add(this.lblPlayerHand);
             this.Controls.Add(this.rtbDealer);
@@ -143,9 +153,10 @@
             this.Controls.Add(this.btnStand);
             this.Controls.Add(this.btnHit);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(480, 720);
-            this.MinimumSize = new System.Drawing.Size(480, 720);
+            this.MaximumSize = new System.Drawing.Size(709, 1078);
+            this.MinimumSize = new System.Drawing.Size(709, 1078);
             this.Name = "Blackjack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Blackjack";

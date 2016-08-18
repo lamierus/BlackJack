@@ -137,6 +137,8 @@ namespace BlackjackWFA {
         }*/
         //function to start up the game with the initial draws for each player.
         private void StartGame() {
+            Player1.ClearHand();
+            Dealer.ClearHand();
             for (int x = 0; x < 2; x++) {
                 Player1.Draw(drawPile.Deal());
                 Dealer.Draw(drawPile.Deal());
@@ -146,10 +148,10 @@ namespace BlackjackWFA {
 
         //draw the hands on the console
         private void DisplayHands() {
-            //rtbDealer.Clear();
-            rtbDealer.Text = Dealer.Flop() + Environment.NewLine + rtbDealer.Text;
-            //rtbPlayer.Clear();
-            rtbPlayer.Text = Player1.Flop() + Environment.NewLine + rtbPlayer.Text;
+            rtbDealer.Clear();
+            rtbDealer.Text = Dealer.Flop();
+            rtbPlayer.Clear();
+            rtbPlayer.Text = Player1.Flop();
             /*Console.WriteLine(Player1.Name + "'s Hand");
             Player1.ConsoleFlop();
             if (Player1.Bust) {
@@ -214,7 +216,8 @@ namespace BlackjackWFA {
 
         private void cbDecks_SelectedIndexChanged(object sender, EventArgs e) {
             drawPile = new Shoe((int)cbDecks.SelectedItem);
-            //StartGame();
+
+            StartGame();
         }
 
         private void btnQuit_Click(object sender, EventArgs e) {
@@ -222,7 +225,9 @@ namespace BlackjackWFA {
         }
 
         private void btnHit_Click(object sender, EventArgs e) {
-
+            Player1.Draw(drawPile.Deal());
+            rtbPlayer.Clear();
+            rtbPlayer.Text = Player1.Flop();
         }
 
         private void btnStand_Click(object sender, EventArgs e) {
