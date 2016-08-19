@@ -33,7 +33,8 @@
             this.rtbDealer = new System.Windows.Forms.RichTextBox();
             this.lblPlayerHand = new System.Windows.Forms.Label();
             this.rtbPlayer = new System.Windows.Forms.RichTextBox();
-            this.bgwDealer = new System.ComponentModel.BackgroundWorker();
+            this.bgwDealerWait = new System.ComponentModel.BackgroundWorker();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // btnHit
@@ -130,11 +131,11 @@
             this.rtbPlayer.TabStop = false;
             this.rtbPlayer.Text = "";
             // 
-            // bgwDealer
+            // bgwDealerWait
             // 
-            this.bgwDealer.WorkerSupportsCancellation = true;
-            this.bgwDealer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwDealer_DoWork);
-            this.bgwDealer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwDealer_RunWorkerCompleted);
+            this.bgwDealerWait.WorkerSupportsCancellation = true;
+            this.bgwDealerWait.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgwDealerWait_DoWork);
+            this.bgwDealerWait.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgwDealerWait_RunWorkerCompleted);
             // 
             // Blackjack
             // 
@@ -173,7 +174,8 @@
         private System.Windows.Forms.RichTextBox rtbDealer;
         private System.Windows.Forms.Label lblPlayerHand;
         private System.Windows.Forms.RichTextBox rtbPlayer;
-        private System.ComponentModel.BackgroundWorker bgwDealer;
+        private System.ComponentModel.BackgroundWorker bgwDealerWait;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

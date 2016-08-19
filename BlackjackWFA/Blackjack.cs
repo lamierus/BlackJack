@@ -208,18 +208,15 @@ namespace BlackjackWFA {
             DisplayHand(Player1, rtbPlayer);
         }
 
-        private void bgwDealer_DoWork(object sender, DoWorkEventArgs e) {
-            while (Player1.Bust || Player1.Stand){
-                if (Dealer.Bust || Dealer.Stand) {
-                    e.Cancel = true;
-                }
+        private void bgwDealerWait_DoWork(object sender, DoWorkEventArgs e) {
+            while ((!Dealer.Bust || !Dealer.Stand)){
                 TakeTurn(Dealer, rtbDealer);
             }
-            
+            e.Cancel = true;
         }
 
-        private void bgwDealer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-            CheckWinner();
+        private void bgwDealerWait_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            
         }
     }
 }
