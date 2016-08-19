@@ -41,6 +41,8 @@ namespace Engine {
                 if (card.Number == 1) {
                     Score += 11;
                     aces++;
+                } else if (card.Number > 10) {
+                    Score += 10;
                 } else {
                     Score += card.Number;
                 }

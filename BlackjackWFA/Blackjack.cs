@@ -172,20 +172,58 @@ namespace BlackjackWFA {
             hand.Draw(drawPile.Deal());
             DisplayHand(hand, textBox);
         }
+        
+        private void DealerTurn() {
+            do {
+                TakeTurn(Dealer, rtbDealer);
+            } while (!Dealer.Bust && !Dealer.Stand);
+            CheckWinner();
+        }
 
         //find out who won the hand
         private void CheckWinner() {
             if (!Player1.Bust) {
                 if (Dealer.Bust) {
-                    //return true;
+                    //return true;  // player wins
+                    ShowWinnerDialog(Player1, rtbPlayer);
+                    return;
                 } else if (Dealer.Score < Player1.Score) {
-                    //return true;
+                    //return true;  // player wins
+                    ShowWinnerDialog(Player1, rtbPlayer);
+                    return;
                 } else if (Player1.Score == 21 && Dealer.Score == 21) {
-                    //return false;
+                    //return false; // dealer wins
+                    ShowWinnerDialog(Dealer, rtbDealer);
+                    return;
                 } else if (Player1.Score == 21) {
-                    //return true;
+                    //return true;  // player wins
+                    ShowWinnerDialog(Player1, rtbPlayer);
+                    return;
                 }
             }
+            //Dealer wins
+            ShowWinnerDialog(Dealer, rtbDealer);
+        }
+
+        private void ShowWinnerDialog(BJPlayer player, RichTextBox textBox) {
+            textBox.Text += Environment.NewLine + Environment.NewLine + player.Name + " wins!";
+            RichTextBox rtbWinner = new RichTextBox();
+            rtbWinner.Name = "rtbWinner";
+            rtbWinner.ReadOnly = true;
+            rtbWinner.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            rtbWinner.TabStop = false;
+            rtbWinner.Text = Environment.NewLine + player.Name + " wins!" + Environment.NewLine;
+            rtbWinner.Dock = DockStyle.Fill;
+            rtbWinner.Font = new Font("Microsoft Sans Serif", 22F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            rtbWinner.ReadOnly = true;
+            Form Winner = new Form();
+            Winner.Parent = this.ParentForm;
+            Winner.Height = 150;
+            Winner.Width = 250;
+            Winner.Controls.Add(rtbWinner);
+            Winner.StartPosition = FormStartPosition.CenterParent;
+            Winner.ShowDialog();
+            StartGame();
         }
 
         private void cbDecks_SelectedIndexChanged(object sender, EventArgs e) {
@@ -199,24 +237,17 @@ namespace BlackjackWFA {
 
         private void btnHit_Click(object sender, EventArgs e) {
             TakeTurn(Player1, rtbPlayer);
-            
+            if (Player1.Bust || Player1.BlackJack || Player1.Stand) {
+                Dealer.Turn = true;
+                DealerTurn();
+            }
         }
 
         private void btnStand_Click(object sender, EventArgs e) {
             Player1.Stand = true;
-            Dealer.Turn = true;
             DisplayHand(Player1, rtbPlayer);
-        }
-
-        private void bgwDealerWait_DoWork(object sender, DoWorkEventArgs e) {
-            while ((!Dealer.Bust || !Dealer.Stand)){
-                TakeTurn(Dealer, rtbDealer);
-            }
-            e.Cancel = true;
-        }
-
-        private void bgwDealerWait_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
-            
+            Dealer.Turn = true;
+            DealerTurn();
         }
     }
 }
