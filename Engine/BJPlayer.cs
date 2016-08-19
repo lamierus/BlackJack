@@ -45,15 +45,23 @@ namespace Engine {
                     Score += card.Number;
                 }
             }
+
             if (aces > 0 && Score > 21) {
                 for (int x = 0; x < aces; x++) {
                     Score -= 10;
                 }
             }
+
+            if (Score > 21) {
+                Bust = true;
+            } else if (Score == 21) {
+                BlackJack = true;
+                Stand = true;
+            }
         }
 
         //display the Players's hand.
-        public string Flop() {
+        public virtual string Flop() {
             string output = "";
             foreach (Card card in InHand) {
                 output += card.ToString() + Environment.NewLine;

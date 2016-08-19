@@ -59,7 +59,7 @@ namespace Engine {
             }
         }
         public override int GetHashCode() {
-            return Suit + Number;
+            return Suit * Number;
         }
         public bool Equals(Card other) {
             if (other == null) {

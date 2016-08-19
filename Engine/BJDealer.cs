@@ -27,7 +27,7 @@ namespace Engine {
         }
 
         //display the Dealer's hand.
-        public string Flop() {
+        public override string Flop() {
             string output = "";
             if (!Bust && !Stand && !Turn) {
                 output += "__ of _____" + Environment.NewLine;
@@ -43,7 +43,7 @@ namespace Engine {
             return output;
         }
 
-        //display the Dealer's hand.
+        //display the Dealer's hand in a console
         new public void ConsoleFlop() {
             if (!Bust && !Stand && !Turn) {
                 Console.WriteLine("__ of _____");

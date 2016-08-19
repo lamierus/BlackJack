@@ -135,6 +135,7 @@ namespace BlackjackWFA {
             } while (PlayGame);
             Quit();
         }*/
+
         //function to start up the game with the initial draws for each player.
         private void StartGame() {
             Player1.ClearHand();
@@ -143,49 +144,33 @@ namespace BlackjackWFA {
                 Player1.Draw(drawPile.Deal());
                 Dealer.Draw(drawPile.Deal());
             }
-            DisplayHands();
-            //bgwDealer.RunWorkerAsync();
+            DisplayHand(Player1, rtbPlayer);
+            DisplayHand(Dealer, rtbDealer);
         }
 
         //draw the hands on the console
-        private void DisplayHands() {
-            rtbDealer.Clear();
-            rtbDealer.Text = Dealer.Flop();
-            rtbPlayer.Clear();
-            rtbPlayer.Text = Player1.Flop();
-            if (Player1.Bust) {
-                //Console.WriteLine();
-                //Console.WriteLine(Player1.Name + " busted!");
-                rtbPlayer.Text += Environment.NewLine +  Player1.Name + " busted!";
-            } else if (Player1.Stand) {
-                rtbPlayer.Text += Environment.NewLine + Player1.Name + " stands.";
+        private void DisplayHand(BJPlayer hand, RichTextBox textBox) {
+            textBox.Clear();
+            textBox.Text = hand.Flop();
+            if (hand.Bust) {
+                textBox.Text += Environment.NewLine + hand.Name + " busted!";
+            } else if (hand.Stand) {
+                textBox.Text += Environment.NewLine + hand.Name + " stands.";
             }
+            
         }
 
-        //logic to perform the player's turn
-        private void PlayerTurn() {
-            if (Player1.Score > 21) {
-                Player1.Bust = true;
+        private void TakeTurn(BJPlayer hand, RichTextBox textBox) {
+            if (hand.Bust) {
+                DisplayHand(hand, textBox);
                 return;
             }
-            if (Player1.Score == 21) {
-                Player1.Stand = true;
+            if (hand.Stand) {
+                DisplayHand(hand, textBox);
                 return;
             }
-            Player1.Draw(drawPile.Deal());
-        }
-
-        //logic to perform the dealer's turn
-        private void DealerTurn() {
-            if (Dealer.Score > 21) {
-                Dealer.Bust = true;
-                return;
-            }
-            if (Dealer.Score >= 18) {
-                Dealer.Stand = true;
-                return;
-            }
-            Dealer.Draw(drawPile.Deal());
+            hand.Draw(drawPile.Deal());
+            DisplayHand(hand, textBox);
         }
 
         //find out who won the hand
@@ -213,21 +198,24 @@ namespace BlackjackWFA {
         }
 
         private void btnHit_Click(object sender, EventArgs e) {
-            PlayerTurn();
-            rtbPlayer.Clear();
-            rtbPlayer.Text = Player1.Flop();
+            TakeTurn(Player1, rtbPlayer);
+            
         }
 
         private void btnStand_Click(object sender, EventArgs e) {
             Player1.Stand = true;
+            Dealer.Turn = true;
+            DisplayHand(Player1, rtbPlayer);
         }
 
         private void bgwDealer_DoWork(object sender, DoWorkEventArgs e) {
-            if (Dealer.Bust || Dealer.Stand) {
-                e.Cancel = true;
-            } else if (Player1.Bust || Player1.Stand) {
-                DealerTurn();
+            while (Player1.Bust || Player1.Stand){
+                if (Dealer.Bust || Dealer.Stand) {
+                    e.Cancel = true;
+                }
+                TakeTurn(Dealer, rtbDealer);
             }
+            
         }
 
         private void bgwDealer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
