@@ -22,119 +22,43 @@ namespace BlackjackWFA {
             cbDecks.DataSource = DeckSize;
             cbDecks.SelectedIndex = 4;
             StartGame();
+            //RequestDeal();
         }
 
-        /*static void Main(string[] args) {
-            Console.Title = "Blackjack in a Console!";
-            Console.CursorVisible = false;
-            Console.SetWindowSize(55, 30);
-            Console.SetBufferSize(55, 30);
-            Console.WriteLine("Enter a player name:");
-            string input = Console.ReadLine();
-            Player1 = new BJPlayer(input);
-            Dealer = new BJDealer();
-            Console.Clear();
-            Console.WriteLine("Welcome " + Player1.Name.ToString() + "!");
-            Console.WriteLine();
-            Console.WriteLine("Are you ready to play some Blackjack? (Y/N)");
-            PlayGame = false;
-            while (!PlayGame) {
-                input = Console.ReadKey().KeyChar.ToString();
-                if (input.ToLower() == "n") {
-                    Quit();
-                } else if (input.ToLower() == "y") {
-                    PlayGame = true;
-                } else {
-                    Console.WriteLine();
-                    Console.WriteLine("Please press either (Y)es or (N)o to continue.");
-                }
-            }
-            Console.WriteLine('\n');
-            Console.WriteLine("How many Decks would you like to play with?");
-            Console.WriteLine("(The standard size for blackjack is 5 decks.)");
-            Console.WriteLine("Minimum: 1    Maximum: 10");
-            int parsedNum;
-            int numDecks;
-            input = Console.ReadLine();
-            //parse the input to make sure it's a number
-            if (int.TryParse(input, out parsedNum)) {
-                if (parsedNum < 1) {
-                    parsedNum = 1;
-                } else if (parsedNum > 10) {
-                    parsedNum = 10;
-                }
-                numDecks = parsedNum;
-            } else {
-                numDecks = 5;
-            }
-            drawPile = new Shoe(numDecks);
-            do {
-                if (drawPile.IsEmpty()) {
-                    drawPile.Reshuffle();
-                }
-                StartGame();
-                while (!Player1.Stand && !Player1.Bust && !Dealer.Bust) {
-                    PlayerTurn();
-                    DisplayHands();
-                }
-                if (Player1.Stand || Player1.Bust) {
-                    Console.WriteLine();
-                    Console.WriteLine("Dealers turn!  Press any key to continue");
-                }
-                Console.ReadKey(true);
-                Dealer.Turn = true;
-                do {
-                    if (!Player1.Bust) {
-                        DealerTurn();
-                    } else {
-                        Dealer.Stand = true;
-                    }
-                    DisplayHands();
-                    if (!Dealer.Stand && !Dealer.Bust) {
-                        Console.WriteLine();
-                        Console.WriteLine("Dealer hits.  Press any key to continue.");
-                        Console.ReadKey(true);
-                    } else if (Dealer.Stand) {
-                        Console.WriteLine();
-                        Console.WriteLine("Dealer Stands.");
-                    }
-                } while (!Dealer.Stand && !Dealer.Bust && !Player1.Bust);
-                if (Dealer.Stand || Dealer.Bust) {
-                    Console.WriteLine();
-                    if (Dealer.Bust) {
-                        Console.WriteLine("Dealers busted.  Press any key to check who won!");
-                    } else {
-                        Console.WriteLine("Dealers turn is over.  Press any key to check who won!");
-                    }
-                }
-                Console.ReadKey(true);
-                if (CheckWinner()) {
-                    Console.Clear();
-                    Console.WriteLine("Congratulations, " + Player1.Name + "!\nYou won this hand of blackjack!");
-                } else {
-                    Console.Clear();
-                    Console.WriteLine("Unfortunately, The Dealer won this hand of blackjack.\nSorry!");
-                }
-                Console.WriteLine();
-                Console.WriteLine("Do you wish to (C)ontinue? or (Q)uit?");
-                bool quit = false;
-                do {
-                    input = Console.ReadKey().KeyChar.ToString();
-                    if (input.ToLower() == "q") {
-                        quit = true;
-                        PlayGame = false;
-                    } else if (input.ToLower() == "c") {
-                        Player1.ClearHand();
-                        Dealer.ClearHand();
-                        break;
-                    } else {
-                        Console.WriteLine();
-                        Console.WriteLine("Please press either (C)ontinue or (Q)uit to continue from here.");
-                    }
-                } while (!quit);
-            } while (PlayGame);
-            Quit();
-        }*/
+        private void RequestDeal() {
+            Button btnDeal = new Button();
+            btnDeal.Text = "Deal me in!";
+            btnDeal.Location = new System.Drawing.Point(55, 30);
+            btnDeal.Name = "btnDeal";
+            btnDeal.Size = new System.Drawing.Size(200, 30);
+            btnDeal.TabIndex = 1;
+            btnDeal.UseVisualStyleBackColor = true;
+            btnDeal.Click += new EventHandler(this.btnQuit_Click);
+            Button btnDealQuit = new Button();
+            btnDealQuit.Text = "I don't want to play.";
+            btnDealQuit.Location = new System.Drawing.Point(90, 30);
+            btnDealQuit.Name = "btnDealQuit";
+            btnDealQuit.Size = new System.Drawing.Size(200, 30);
+            btnDealQuit.TabIndex = 1;
+            btnDealQuit.UseVisualStyleBackColor = true;
+            btnDealQuit.Click += new EventHandler(this.btnQuit_Click);
+            Form frmDeal = new Form();
+            frmDeal.Parent = this.ParentForm;
+            frmDeal.Height = 150;
+            frmDeal.Width = 250;
+            frmDeal.Controls.Add(btnDeal);
+            frmDeal.Controls.Add(btnDealQuit);
+            frmDeal.StartPosition = FormStartPosition.CenterParent;
+            frmDeal.ShowDialog();
+        }
+
+        private void btnDeal_Click(object sender, EventArgs e) {
+            StartGame();
+        }
+
+        private void btnDealQuit_Click(object sender, EventArgs e) {
+            Environment.Exit(0);
+        }
 
         //function to start up the game with the initial draws for each player.
         private void StartGame() {
@@ -172,11 +96,16 @@ namespace BlackjackWFA {
             hand.Draw(drawPile.Deal());
             DisplayHand(hand, textBox);
         }
-        
+
         private void DealerTurn() {
-            do {
-                TakeTurn(Dealer, rtbDealer);
-            } while (!Dealer.Bust && !Dealer.Stand);
+            if (!Player1.Bust) {
+                do {
+                    TakeTurn(Dealer, rtbDealer);
+                } while (!Dealer.Bust && !Dealer.Stand);
+            } else {
+                Dealer.Stand = true;
+            }
+            DisplayHand(Dealer, rtbDealer);
             CheckWinner();
         }
 
