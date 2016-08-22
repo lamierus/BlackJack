@@ -27,8 +27,6 @@
             this.btnHit = new System.Windows.Forms.Button();
             this.btnStand = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
-            this.lblDecks = new System.Windows.Forms.Label();
-            this.cbDecks = new System.Windows.Forms.ComboBox();
             this.lblDealerHand = new System.Windows.Forms.Label();
             this.rtbDealer = new System.Windows.Forms.RichTextBox();
             this.lblPlayerHand = new System.Windows.Forms.Label();
@@ -47,7 +45,7 @@
             // 
             // btnStand
             // 
-            this.btnStand.Location = new System.Drawing.Point(168, 590);
+            this.btnStand.Location = new System.Drawing.Point(177, 590);
             this.btnStand.Name = "btnStand";
             this.btnStand.Size = new System.Drawing.Size(150, 80);
             this.btnStand.TabIndex = 1;
@@ -57,40 +55,21 @@
             // 
             // btnQuit
             // 
-            this.btnQuit.Location = new System.Drawing.Point(324, 647);
+            this.btnQuit.Location = new System.Drawing.Point(397, 645);
             this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Size = new System.Drawing.Size(128, 23);
+            this.btnQuit.Size = new System.Drawing.Size(55, 25);
             this.btnQuit.TabIndex = 2;
             this.btnQuit.Text = "Quit";
             this.btnQuit.UseVisualStyleBackColor = true;
             this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
-            // lblDecks
-            // 
-            this.lblDecks.AutoSize = true;
-            this.lblDecks.Location = new System.Drawing.Point(324, 590);
-            this.lblDecks.Name = "lblDecks";
-            this.lblDecks.Size = new System.Drawing.Size(129, 13);
-            this.lblDecks.TabIndex = 3;
-            this.lblDecks.Text = "Number of Decks in Shoe";
-            // 
-            // cbDecks
-            // 
-            this.cbDecks.FormattingEnabled = true;
-            this.cbDecks.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.cbDecks.Location = new System.Drawing.Point(324, 606);
-            this.cbDecks.Name = "cbDecks";
-            this.cbDecks.Size = new System.Drawing.Size(128, 21);
-            this.cbDecks.TabIndex = 4;
-            this.cbDecks.Text = "# of Decks";
-            this.cbDecks.SelectedIndexChanged += new System.EventHandler(this.cbDecks_SelectedIndexChanged);
-            // 
             // lblDealerHand
             // 
             this.lblDealerHand.AutoSize = true;
-            this.lblDealerHand.Location = new System.Drawing.Point(9, 9);
+            this.lblDealerHand.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDealerHand.Location = new System.Drawing.Point(12, 2);
             this.lblDealerHand.Name = "lblDealerHand";
-            this.lblDealerHand.Size = new System.Drawing.Size(74, 13);
+            this.lblDealerHand.Size = new System.Drawing.Size(123, 20);
             this.lblDealerHand.TabIndex = 5;
             this.lblDealerHand.Text = "Dealer\'s Hand";
             // 
@@ -110,9 +89,10 @@
             // lblPlayerHand
             // 
             this.lblPlayerHand.AutoSize = true;
-            this.lblPlayerHand.Location = new System.Drawing.Point(9, 300);
+            this.lblPlayerHand.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayerHand.Location = new System.Drawing.Point(12, 293);
             this.lblPlayerHand.Name = "lblPlayerHand";
-            this.lblPlayerHand.Size = new System.Drawing.Size(72, 13);
+            this.lblPlayerHand.Size = new System.Drawing.Size(119, 20);
             this.lblPlayerHand.TabIndex = 7;
             this.lblPlayerHand.Text = "Player\'s Hand";
             // 
@@ -131,6 +111,7 @@
             // 
             // Blackjack
             // 
+            this.AcceptButton = this.btnHit;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(462, 676);
@@ -138,8 +119,6 @@
             this.Controls.Add(this.lblPlayerHand);
             this.Controls.Add(this.rtbDealer);
             this.Controls.Add(this.lblDealerHand);
-            this.Controls.Add(this.cbDecks);
-            this.Controls.Add(this.lblDecks);
             this.Controls.Add(this.btnQuit);
             this.Controls.Add(this.btnStand);
             this.Controls.Add(this.btnHit);
@@ -150,6 +129,7 @@
             this.Name = "Blackjack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Blackjack";
+            this.Activated += new System.EventHandler(this.Blackjack_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,8 +140,6 @@
         private System.Windows.Forms.Button btnHit;
         private System.Windows.Forms.Button btnStand;
         private System.Windows.Forms.Button btnQuit;
-        private System.Windows.Forms.Label lblDecks;
-        private System.Windows.Forms.ComboBox cbDecks;
         private System.Windows.Forms.Label lblDealerHand;
         private System.Windows.Forms.RichTextBox rtbDealer;
         private System.Windows.Forms.Label lblPlayerHand;

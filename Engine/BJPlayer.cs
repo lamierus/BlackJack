@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Engine {
     public class BJPlayer : Hand {
@@ -11,13 +7,7 @@ namespace Engine {
         public bool BlackJack { get; set; }
         //initialize the Blackjack Player object
         public BJPlayer(String name = "Player") {
-            if (name == "Player") {
-                Name = name + ' ' + Count.ToString();
-            } else if (name == "\n" || name == " " || name == "") {
-                Name = "Player" + ' ' + Count.ToString();
-            } else {
-                Name = name;
-            }
+            Name = name;
             Stand = false;
             Bust = false;
             BlackJack = false;

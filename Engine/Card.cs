@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Engine {
     public class Card : IEquatable<Card> {//IComparable, IEquatable<Card> {
@@ -44,7 +40,7 @@ namespace Engine {
             } else {
                 cardNum = "Unknown Number";
             }
-            return cardNum + " Of " + cardSuit;
+            return cardNum + " of " + cardSuit;
         }
         // the logic required to be able to compare cards to each other
         public override bool Equals(Object obj) {
