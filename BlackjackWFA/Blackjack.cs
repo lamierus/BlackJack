@@ -28,7 +28,7 @@ namespace BlackjackWFA {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Blackjack_Activated(object sender, EventArgs e) {
+        private void Blackjack_Load(object sender, EventArgs e) {
             if (!PlayingGame) {
                 RequestDeal();
             }
@@ -40,7 +40,6 @@ namespace BlackjackWFA {
         private void RequestDeal() {
             Form frmContinue = BuildDialog();
             frmContinue.ShowDialog();
-            //Application.Run(frmContinue);
         }
 
         /// <summary>
@@ -284,6 +283,7 @@ namespace BlackjackWFA {
 
             //setting up the rich text box
             rtbWinner.Name = "rtbWinner";
+            rtbWinner.Tag = "rtbWinner";
             rtbWinner.SelectionAlignment = HorizontalAlignment.Center;
             rtbWinner.ReadOnly = true;
             rtbWinner.ScrollBars = RichTextBoxScrollBars.None;
@@ -292,18 +292,35 @@ namespace BlackjackWFA {
             rtbWinner.Dock = DockStyle.Fill;
             rtbWinner.Font = new Font("Microsoft Sans Serif", 22F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
             rtbWinner.ReadOnly = true;
+            rtbWinner.MouseClick += new MouseEventHandler(rtbWinner_Close);
+            rtbWinner.KeyPress += new KeyPressEventHandler(rtbWinner_Close);
             Winner.Controls.Add(rtbWinner);
 
             //setting up the rest of the winner display form
-            //Winner.Parent = this.ParentForm;
             Winner.Height = 150;
             Winner.Width = 250;
             Winner.MinimizeBox = false;
             Winner.MaximizeBox = false;
             Winner.StartPosition = FormStartPosition.CenterParent;
+            Winner.MouseClick += new MouseEventHandler(Winner_Close);
+            Winner.KeyPress += new KeyPressEventHandler(Winner_Close);
+            Winner.Focus();
             Winner.ShowDialog();
 
             StartGame();
+        }
+        /// <summary>
+        ///     something something something close the winning dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Winner_Close(object sender, EventArgs e) {
+            Form sent = sender as Form;
+            sent.Dispose();
+        }
+        private void rtbWinner_Close(object sender, EventArgs e) {
+            RichTextBox sent = sender as RichTextBox;
+            sent.Parent.Dispose();
         }
 
         /// <summary>
