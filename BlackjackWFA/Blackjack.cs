@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Resources;
 using Engine;
 
 namespace BlackjackWFA {
@@ -18,7 +19,7 @@ namespace BlackjackWFA {
         int Decks = 5;
         private bool AllowClose = false;
         //allow all resources for the project to be available for use here, like icon and images
-        ComponentResourceManager resources = new ComponentResourceManager(typeof(Blackjack));
+        ResourceManager Resources = Engine.Properties.Resources.ResourceManager;
 
         public Blackjack() {
             InitializeComponent();
@@ -192,8 +193,8 @@ namespace BlackjackWFA {
                 Player1.Draw(drawPile.Deal());
                 Dealer.Draw(drawPile.Deal());
             }
-            DisplayHand(Player1, rtbPlayer);
-            DisplayHand(Dealer, rtbDealer);
+            DisplayHand(Player1, rtbPlayer, gbPlayer);
+            DisplayHand(Dealer, rtbDealer, gbDealer);
         }
 
         /// <summary>
@@ -201,13 +202,21 @@ namespace BlackjackWFA {
         /// </summary>
         /// <param name="hand"></param>
         /// <param name="textBox"></param>
-        private void DisplayHand(BJPlayer hand, RichTextBox textBox) {
+        private void DisplayHand(BJPlayer hand, RichTextBox textBox, GroupBox groupBox) {
             textBox.Clear();
-            textBox.Text = hand.Flop();
-            if (hand.Bust) {
+            //textBox.Text = hand.Flop();
+            textBox.Text = hand.Score.ToString();
+            /*if (hand.Bust) {
                 textBox.Text += Environment.NewLine + hand.Name + " busted!";
             } else if (hand.Stand) {
                 textBox.Text += Environment.NewLine + hand.Name + " stands.";
+            }*/
+            Point point = new Point(groupBox.Location.X + groupBox.Padding.Left, groupBox.Location.Y + groupBox.Padding.Top);
+            foreach (PictureBox cardPicture in hand.CardPictures) {
+                cardPicture.Location = (point);
+                Controls.Add(cardPicture);
+                cardPicture.BringToFront();
+                point.X += 30;
             }
             
         }
@@ -219,17 +228,17 @@ namespace BlackjackWFA {
         /// </summary>
         /// <param name="hand"></param>
         /// <param name="textBox"></param>
-        private void TakeTurn(BJPlayer hand, RichTextBox textBox) {
+        private void TakeTurn(BJPlayer hand, RichTextBox textBox, GroupBox groupBox) {
             if (hand.Bust) {
-                DisplayHand(hand, textBox);
+                DisplayHand(hand, textBox, groupBox);
                 return;
             }
             if (hand.Stand) {
-                DisplayHand(hand, textBox);
+                DisplayHand(hand, textBox, groupBox);
                 return;
             }
             hand.Draw(drawPile.Deal());
-            DisplayHand(hand, textBox);
+            DisplayHand(hand, textBox, groupBox);
         }
 
         /// <summary>
@@ -238,12 +247,12 @@ namespace BlackjackWFA {
         private void DealerTurn() {
             if (!Player1.Bust && !Player1.BlackJack && ((Player1.Score > Dealer.Score) || Dealer.Score < 18)) {
                 do {
-                    TakeTurn(Dealer, rtbDealer);
+                    TakeTurn(Dealer, rtbDealer, gbDealer);
                 } while (!Dealer.Bust && !Dealer.Stand);
             } else {
                 Dealer.Stand = true;
             }
-            DisplayHand(Dealer, rtbDealer);
+            DisplayHand(Dealer, rtbDealer, gbDealer);
             CheckWinner();
         }
 
@@ -310,6 +319,8 @@ namespace BlackjackWFA {
             Winner.KeyPress += new KeyPressEventHandler(Winner_Close);
             Winner.Focus();
             Winner.ShowDialog();
+            gbDealer.Dispose();
+            gbPlayer.Dispose();
 
             StartGame();
         }
@@ -334,7 +345,7 @@ namespace BlackjackWFA {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnHit_Click(object sender, EventArgs e) {
-            TakeTurn(Player1, rtbPlayer);
+            TakeTurn(Player1, rtbPlayer, gbPlayer);
             if (Player1.Bust || Player1.BlackJack || Player1.Stand) {
                 Dealer.Turn = true;
                 DealerTurn();
@@ -348,7 +359,7 @@ namespace BlackjackWFA {
         /// <param name="e"></param>
         private void btnStand_Click(object sender, EventArgs e) {
             Player1.Stand = true;
-            DisplayHand(Player1, rtbPlayer);
+            DisplayHand(Player1, rtbPlayer, gbPlayer);
             Dealer.Turn = true;
             DealerTurn();
         }
@@ -370,7 +381,9 @@ namespace BlackjackWFA {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            if (!AllowClose) { e.Cancel = true; }
+            if (!AllowClose) {
+                e.Cancel = true;
+            }
         }
     }
 }

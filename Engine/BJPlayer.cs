@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Resources;
+using System.Drawing;
 
 namespace Engine {
     public class BJPlayer : Hand {
         public bool Stand { get; set; }
         public bool Bust { get; set; }
         public bool BlackJack { get; set; }
+        public List<PictureBox> CardPictures = new List<PictureBox>();
+        private ResourceManager Resources = Properties.Resources.ResourceManager;
         //initialize the Blackjack Player object
         public BJPlayer(String name = "Player") {
             Name = name;
@@ -20,6 +26,11 @@ namespace Engine {
         //draw a card from the pile and place it in the player's hand
         new public void Draw(Card card) {
             InHand.Add(card);
+            PictureBox cardPicture = new PictureBox();
+            cardPicture.SizeMode = PictureBoxSizeMode.StretchImage;
+            cardPicture.Image = (Image)Resources.GetObject(card.GetImageName());
+            cardPicture.Size = new Size(165, 240);
+            CardPictures.Add(cardPicture);
             ScoreHand();
         }
         //score the hand, based upon Blackjack rules
@@ -65,6 +76,7 @@ namespace Engine {
         //empty out the hand and reset the boolean properties.
         new public void ClearHand() {
             InHand.Clear();
+            CardPictures.Clear();
             BlackJack = false;
             Bust = false;
             Stand = false;
