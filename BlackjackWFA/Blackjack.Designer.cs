@@ -35,7 +35,8 @@
             // 
             // btnHit
             // 
-            this.btnHit.Location = new System.Drawing.Point(12, 590);
+            this.btnHit.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHit.Location = new System.Drawing.Point(57, 590);
             this.btnHit.Name = "btnHit";
             this.btnHit.Size = new System.Drawing.Size(150, 80);
             this.btnHit.TabIndex = 0;
@@ -45,7 +46,8 @@
             // 
             // btnStand
             // 
-            this.btnStand.Location = new System.Drawing.Point(177, 590);
+            this.btnStand.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnStand.Location = new System.Drawing.Point(241, 590);
             this.btnStand.Name = "btnStand";
             this.btnStand.Size = new System.Drawing.Size(150, 80);
             this.btnStand.TabIndex = 1;
@@ -55,6 +57,7 @@
             // 
             // btnQuit
             // 
+            this.btnQuit.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnQuit.Location = new System.Drawing.Point(397, 645);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(55, 25);
@@ -129,8 +132,8 @@
             this.Name = "Blackjack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Blackjack";
-            //this.Activated += new System.EventHandler(this.Blackjack_Activated);
             this.Activated += new System.EventHandler(this.Blackjack_Load);
+            //this.Load += new System.EventHandler(this.Blackjack_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

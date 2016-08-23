@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using Engine;
 
@@ -16,7 +16,8 @@ namespace BlackjackWFA {
         static BJDealer Dealer = new BJDealer();
         static bool PlayingGame = false;
         int Decks = 5;
-        //allow all resources for the project to be available for use here, liek icon and such
+        private bool AllowClose = false;
+        //allow all resources for the project to be available for use here, like icon and images
         ComponentResourceManager resources = new ComponentResourceManager(typeof(Blackjack));
 
         public Blackjack() {
@@ -38,10 +39,12 @@ namespace BlackjackWFA {
         ///     creates and displays a dialog to ask the player if they want to play the game.
         /// </summary>
         private void RequestDeal() {
+            //PromptDialog frmContinue = new PromptDialog();
             Form frmContinue = BuildDialog();
             frmContinue.ShowDialog();
+            
         }
-
+        
         /// <summary>
         ///     returns the built form, to accept input from the user.
         /// </summary>
@@ -126,7 +129,7 @@ namespace BlackjackWFA {
             
             //initialize the rest of the form
             frmDeal.ShowInTaskbar = false;
-            frmDeal.Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            //frmDeal.Icon = ((Icon)(resources.GetObject("$this.Icon")));
             frmDeal.Width = 305;
             frmDeal.Height = 140;
             frmDeal.StartPosition = FormStartPosition.CenterParent;
@@ -134,6 +137,8 @@ namespace BlackjackWFA {
             frmDeal.MinimizeBox = false;
             frmDeal.AutoScaleMode = AutoScaleMode.Font;
             frmDeal.ControlBox = false;
+            frmDeal.AcceptButton = btnDeal;
+            frmDeal.CancelButton = btnDealQuit;
 
             return frmDeal;
         }
@@ -165,10 +170,9 @@ namespace BlackjackWFA {
         /// <param name="e"></param>
         private void btnDeal_Click(object sender, EventArgs e) {
             Button btnSent = sender as Button;
-            //btnSent.Parent.SendToBack();
-            //btnSent.Parent.Hide();
-            //btnSent.Parent.Visible = false;
+            //this.SuspendLayout();
             btnSent.Parent.Dispose();
+            //this.ResumeLayout(false);
             lblPlayerHand.Text = Player1.Name + "\'s Hand";
             //check if the Shoe has been built or if the # of decks was changed from default.
             if (drawPile == null || drawPile.GetDecks() != Decks) {
@@ -316,20 +320,11 @@ namespace BlackjackWFA {
         /// <param name="e"></param>
         private void Winner_Close(object sender, EventArgs e) {
             Form sent = sender as Form;
-            sent.Dispose();
+            sent.Close();
         }
         private void rtbWinner_Close(object sender, EventArgs e) {
             RichTextBox sent = sender as RichTextBox;
             sent.Parent.Dispose();
-        }
-
-        /// <summary>
-        ///     logic to quit the game when the button is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnQuit_Click(object sender, EventArgs e) {
-            Environment.Exit(0);
         }
 
         /// <summary>
@@ -356,6 +351,26 @@ namespace BlackjackWFA {
             DisplayHand(Player1, rtbPlayer);
             Dealer.Turn = true;
             DealerTurn();
+        }
+
+        /// <summary>
+        ///     logic to quit the game when the button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnQuit_Click(object sender, EventArgs e) {
+            AllowClose = true;
+            this.Close();
+            //Environment.Exit(0);
+        }
+        
+        /// <summary>
+        ///     check if it's okay to close the window.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            if (!AllowClose) { e.Cancel = true; }
         }
     }
 }
