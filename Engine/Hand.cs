@@ -8,7 +8,7 @@ namespace Engine {
         public int Score { get; set; }
         public int CardsInHand { get; set; }
         public static int Count = 0;
-        protected List<Card> InHand = new List<Card>();
+        public List<Card> InHand = new List<Card>();
         //initialize a basic player
         public Hand(String name = "Player") {
             if (name == "Player") {

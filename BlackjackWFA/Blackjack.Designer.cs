@@ -31,6 +31,10 @@
             this.rtbDealer = new System.Windows.Forms.RichTextBox();
             this.lblPlayerHand = new System.Windows.Forms.Label();
             this.rtbPlayer = new System.Windows.Forms.RichTextBox();
+            this.lblDealerScore = new System.Windows.Forms.Label();
+            this.lblPlayerScore = new System.Windows.Forms.Label();
+            this.gbDealer = new System.Windows.Forms.GroupBox();
+            this.gbPlayer = new System.Windows.Forms.GroupBox();
             this.SuspendLayout();
             // 
             // btnHit
@@ -70,7 +74,7 @@
             // 
             this.lblDealerHand.AutoSize = true;
             this.lblDealerHand.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDealerHand.Location = new System.Drawing.Point(12, 2);
+            this.lblDealerHand.Location = new System.Drawing.Point(12, 12);
             this.lblDealerHand.Name = "lblDealerHand";
             this.lblDealerHand.Size = new System.Drawing.Size(123, 20);
             this.lblDealerHand.TabIndex = 5;
@@ -80,11 +84,11 @@
             // 
             this.rtbDealer.BackColor = System.Drawing.SystemColors.Window;
             this.rtbDealer.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbDealer.Location = new System.Drawing.Point(12, 25);
+            this.rtbDealer.Location = new System.Drawing.Point(397, 12);
             this.rtbDealer.Name = "rtbDealer";
             this.rtbDealer.ReadOnly = true;
             this.rtbDealer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbDealer.Size = new System.Drawing.Size(440, 265);
+            this.rtbDealer.Size = new System.Drawing.Size(50, 30);
             this.rtbDealer.TabIndex = 6;
             this.rtbDealer.TabStop = false;
             this.rtbDealer.Text = "";
@@ -103,14 +107,57 @@
             // 
             this.rtbPlayer.BackColor = System.Drawing.SystemColors.Window;
             this.rtbPlayer.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rtbPlayer.Location = new System.Drawing.Point(12, 316);
+            this.rtbPlayer.Location = new System.Drawing.Point(397, 293);
             this.rtbPlayer.Name = "rtbPlayer";
             this.rtbPlayer.ReadOnly = true;
             this.rtbPlayer.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.rtbPlayer.Size = new System.Drawing.Size(440, 265);
+            this.rtbPlayer.Size = new System.Drawing.Size(50, 30);
             this.rtbPlayer.TabIndex = 8;
             this.rtbPlayer.TabStop = false;
             this.rtbPlayer.Text = "";
+            // 
+            // lblDealerScore
+            // 
+            this.lblDealerScore.AutoSize = true;
+            this.lblDealerScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDealerScore.Location = new System.Drawing.Point(344, 12);
+            this.lblDealerScore.Name = "lblDealerScore";
+            this.lblDealerScore.Size = new System.Drawing.Size(47, 16);
+            this.lblDealerScore.TabIndex = 9;
+            this.lblDealerScore.Text = "Score:";
+            // 
+            // lblPlayerScore
+            // 
+            this.lblPlayerScore.AutoSize = true;
+            this.lblPlayerScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPlayerScore.Location = new System.Drawing.Point(344, 293);
+            this.lblPlayerScore.Name = "lblPlayerScore";
+            this.lblPlayerScore.Size = new System.Drawing.Size(47, 16);
+            this.lblPlayerScore.TabIndex = 10;
+            this.lblPlayerScore.Text = "Score:";
+            // 
+            // gbDealer
+            // 
+            this.gbDealer.BackColor = System.Drawing.SystemColors.Control;
+            this.gbDealer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gbDealer.Location = new System.Drawing.Point(16, 36);
+            this.gbDealer.Name = "gbDealer";
+            this.gbDealer.Size = new System.Drawing.Size(375, 254);
+            this.gbDealer.TabIndex = 11;
+            this.gbDealer.TabStop = false;
+            this.gbDealer.Tag = "gbDealer";
+            this.gbDealer.Visible = false;
+            // 
+            // gbPlayer
+            // 
+            this.gbPlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.gbPlayer.Location = new System.Drawing.Point(16, 316);
+            this.gbPlayer.Name = "gbPlayer";
+            this.gbPlayer.Size = new System.Drawing.Size(375, 254);
+            this.gbPlayer.TabIndex = 12;
+            this.gbPlayer.TabStop = false;
+            this.gbPlayer.Tag = "gbPlayer";
+            this.gbPlayer.Visible = false;
             // 
             // Blackjack
             // 
@@ -118,6 +165,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(462, 676);
+            this.Controls.Add(this.gbPlayer);
+            this.Controls.Add(this.gbDealer);
+            this.Controls.Add(this.lblPlayerScore);
+            this.Controls.Add(this.lblDealerScore);
             this.Controls.Add(this.rtbPlayer);
             this.Controls.Add(this.lblPlayerHand);
             this.Controls.Add(this.rtbDealer);
@@ -133,7 +184,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Blackjack";
             this.Activated += new System.EventHandler(this.Blackjack_Load);
-            //this.Load += new System.EventHandler(this.Blackjack_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,6 +198,10 @@
         private System.Windows.Forms.RichTextBox rtbDealer;
         private System.Windows.Forms.Label lblPlayerHand;
         private System.Windows.Forms.RichTextBox rtbPlayer;
+        private System.Windows.Forms.Label lblDealerScore;
+        private System.Windows.Forms.Label lblPlayerScore;
+        private System.Windows.Forms.GroupBox gbDealer;
+        private System.Windows.Forms.GroupBox gbPlayer;
     }
 }
 
