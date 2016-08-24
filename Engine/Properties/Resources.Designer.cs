@@ -463,6 +463,16 @@ namespace Engine.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Back_Side {
+            get {
+                object obj = ResourceManager.GetObject("Back_Side", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Jack_of_Clubs {
             get {
                 object obj = ResourceManager.GetObject("Jack_of_Clubs", resourceCulture);

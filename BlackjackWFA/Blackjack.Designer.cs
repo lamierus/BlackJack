@@ -142,6 +142,7 @@
             this.gbDealer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbDealer.Location = new System.Drawing.Point(16, 36);
             this.gbDealer.Name = "gbDealer";
+            this.gbDealer.Padding = new System.Windows.Forms.Padding(10, 32, 3, 3);
             this.gbDealer.Size = new System.Drawing.Size(375, 254);
             this.gbDealer.TabIndex = 11;
             this.gbDealer.TabStop = false;
@@ -152,6 +153,7 @@
             this.gbPlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.gbPlayer.Location = new System.Drawing.Point(16, 316);
             this.gbPlayer.Name = "gbPlayer";
+            this.gbPlayer.Padding = new System.Windows.Forms.Padding(10, 32, 3, 3);
             this.gbPlayer.Size = new System.Drawing.Size(375, 254);
             this.gbPlayer.TabIndex = 12;
             this.gbPlayer.TabStop = false;

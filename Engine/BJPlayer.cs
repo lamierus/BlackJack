@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Resources;
 using System.Drawing;
@@ -9,8 +8,8 @@ namespace Engine {
         public bool Stand { get; set; }
         public bool Bust { get; set; }
         public bool BlackJack { get; set; }
-        public List<PictureBox> CardPictures = new List<PictureBox>();
-        private ResourceManager Resources = Properties.Resources.ResourceManager;
+        protected ResourceManager Resources = Properties.Resources.ResourceManager;
+
         //initialize the Blackjack Player object
         public BJPlayer(String name = "Player") {
             Name = name;
@@ -19,24 +18,20 @@ namespace Engine {
             BlackJack = false;
             Count++;
         }
+
         ~BJPlayer() {
             Count--;
-            InHand.Clear();
+            ClearHand();
         }
+
         //draw a card from the pile and place it in the player's hand
         new public void Draw(Card card) {
             InHand.Add(card);
-            PictureBox cardPicture = new PictureBox();
-            cardPicture.SizeMode = PictureBoxSizeMode.StretchImage;
-            cardPicture.Image = (Image)Resources.GetObject(card.GetImageName());
-            cardPicture.Size = new Size(135, 196);
-            cardPicture.Name = card.GetImageName();
-            cardPicture.Tag = card.GetImageName();
-            CardPictures.Add(cardPicture);
             ScoreHand();
         }
+
         //score the hand, based upon Blackjack rules
-        new protected void ScoreHand() {
+        new protected virtual void ScoreHand() {
             Score = 0;
             int aces = 0;
             foreach (Card card in InHand) {
@@ -65,6 +60,16 @@ namespace Engine {
             }
         }
 
+        //remove a card from the user's hand.
+        new public bool Discard(Card disc) {
+            if (InHand.Remove(disc)) {
+                Score -= disc.Number;
+                CardsInHand--;
+                return true;
+            }
+            return false;
+        }
+
         //display the Players's hand.
         public virtual string Flop() {
             string output = "";
@@ -75,15 +80,17 @@ namespace Engine {
             return output;
         }
 
-        public Image GetCardPicture(Card card) {
-            PictureBox finder = CardPictures.Find(pb => pb.Image == card.Picture);
-            return finder.Image;
+        public virtual List<Image> GetCardPictures() {
+            List<Image> pictures = new List<Image>();
+            foreach (Card card in InHand) {
+                pictures.Add(card.Picture);
+            }
+            return pictures;
         }
 
         //empty out the hand and reset the boolean properties.
         new public void ClearHand() {
             InHand.Clear();
-            CardPictures.Clear();
             BlackJack = false;
             Bust = false;
             Stand = false;

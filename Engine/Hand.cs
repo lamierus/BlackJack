@@ -9,6 +9,7 @@ namespace Engine {
         public int CardsInHand { get; set; }
         public static int Count = 0;
         public List<Card> InHand = new List<Card>();
+
         //initialize a basic player
         public Hand(String name = "Player") {
             if (name == "Player") {
@@ -61,7 +62,7 @@ namespace Engine {
             return false;
         }
         //add up the current score of the user's hand
-        protected void ScoreHand() {
+        protected virtual void ScoreHand() {
             foreach (Card card in InHand) {
                 if (card.Number == 0) {
                     Score += 14;
