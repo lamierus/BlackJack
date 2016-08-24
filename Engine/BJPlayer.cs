@@ -29,7 +29,9 @@ namespace Engine {
             PictureBox cardPicture = new PictureBox();
             cardPicture.SizeMode = PictureBoxSizeMode.StretchImage;
             cardPicture.Image = (Image)Resources.GetObject(card.GetImageName());
-            cardPicture.Size = new Size(165, 240);
+            cardPicture.Size = new Size(135, 196);
+            cardPicture.Name = card.GetImageName();
+            cardPicture.Tag = card.GetImageName();
             CardPictures.Add(cardPicture);
             ScoreHand();
         }
@@ -71,6 +73,11 @@ namespace Engine {
             }
             output += Environment.NewLine + "Score: " + Score.ToString();
             return output;
+        }
+
+        public Image GetCardPicture(Card card) {
+            PictureBox finder = CardPictures.Find(pb => pb.Image == card.Picture);
+            return finder.Image;
         }
 
         //empty out the hand and reset the boolean properties.
