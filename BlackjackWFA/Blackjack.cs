@@ -187,14 +187,25 @@ namespace BlackjackWFA {
         ///     function to start up the game with the initial draws for each player.
         /// </summary>
         private void StartGame() {
-            Player1.ClearHand();
-            Dealer.ClearHand();
+            BlankSheet();
+            
             for (int x = 0; x < 2; x++) {
                 Player1.Draw(drawPile.Deal());
                 Dealer.Draw(drawPile.Deal());
             }
             DisplayHand(Player1, rtbPlayer, gbPlayer);
             DisplayHand(Dealer, rtbDealer, gbDealer);
+        }
+
+        private void BlankSheet() {
+            //gbPlayer.Dispose();
+            Player1.ClearHand();
+            //gbPlayer.Refresh();
+            //gbPlayer.Show();
+            //gbDealer.Dispose();
+            Dealer.ClearHand();
+            //gbDealer.Refresh();
+            //gbDealer.Show();            
         }
 
         /// <summary>
@@ -204,23 +215,29 @@ namespace BlackjackWFA {
         /// <param name="textBox"></param>
         private void DisplayHand(BJPlayer hand, RichTextBox textBox, GroupBox groupBox) {
             textBox.Clear();
-            //textBox.Text = hand.Flop();
             textBox.Text = hand.Score.ToString();
-            /*if (hand.Bust) {
+
+            //Point point = new Point(groupBox.Location.X, groupBox.Location.Y);
+            Point point = new Point(10, 20);
+            foreach (PictureBox cardPicture in hand.CardPictures) {
+                cardPicture.Location = (point);
+                if (cardPicture.Image == null) {
+                    cardPicture.Image = (Image)Resources.GetObject("ZB_Joker");
+                }
+                Controls.Add(cardPicture);
+                cardPicture.Parent = groupBox;
+                cardPicture.BringToFront();
+                point.X += 30;
+            }
+            //Leftovers from when it was text-based
+            /*textBox.Text = hand.Flop();
+            if (hand.Bust) {
                 textBox.Text += Environment.NewLine + hand.Name + " busted!";
             } else if (hand.Stand) {
                 textBox.Text += Environment.NewLine + hand.Name + " stands.";
             }*/
-            Point point = new Point(groupBox.Location.X + groupBox.Padding.Left, groupBox.Location.Y + groupBox.Padding.Top);
-            foreach (PictureBox cardPicture in hand.CardPictures) {
-                cardPicture.Location = (point);
-                Controls.Add(cardPicture);
-                cardPicture.BringToFront();
-                point.X += 30;
-            }
-            
         }
-        
+
         /// <summary>
         ///     receives the specified player and associated text box and 
         ///     provides logic to perform the turn for the player, depending on
@@ -319,8 +336,6 @@ namespace BlackjackWFA {
             Winner.KeyPress += new KeyPressEventHandler(Winner_Close);
             Winner.Focus();
             Winner.ShowDialog();
-            gbDealer.Dispose();
-            gbPlayer.Dispose();
 
             StartGame();
         }
@@ -347,7 +362,7 @@ namespace BlackjackWFA {
         private void btnHit_Click(object sender, EventArgs e) {
             TakeTurn(Player1, rtbPlayer, gbPlayer);
             if (Player1.Bust || Player1.BlackJack || Player1.Stand) {
-                Dealer.Turn = true;
+                //Dealer.Turn = true;
                 DealerTurn();
             }
         }
@@ -360,7 +375,7 @@ namespace BlackjackWFA {
         private void btnStand_Click(object sender, EventArgs e) {
             Player1.Stand = true;
             DisplayHand(Player1, rtbPlayer, gbPlayer);
-            Dealer.Turn = true;
+            //Dealer.Turn = true;
             DealerTurn();
         }
 

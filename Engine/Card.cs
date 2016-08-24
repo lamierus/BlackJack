@@ -49,6 +49,9 @@ namespace Engine {
         public string GetImageName() {
             string name = this.ToString();
             name = name.Replace(' ', '_');
+            if (Number == 1 || Number > 10) {
+                return name;
+            }
             return '_' + name;
         }
         // the logic required to be able to compare cards to each other

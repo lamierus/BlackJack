@@ -146,7 +146,6 @@
             this.gbDealer.TabIndex = 11;
             this.gbDealer.TabStop = false;
             this.gbDealer.Tag = "gbDealer";
-            this.gbDealer.Visible = false;
             // 
             // gbPlayer
             // 
@@ -157,7 +156,6 @@
             this.gbPlayer.TabIndex = 12;
             this.gbPlayer.TabStop = false;
             this.gbPlayer.Tag = "gbPlayer";
-            this.gbPlayer.Visible = false;
             // 
             // Blackjack
             // 
