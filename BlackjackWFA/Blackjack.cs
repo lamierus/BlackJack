@@ -42,8 +42,8 @@ namespace BlackjackWFA {
         private void RequestDeal() {
             //PromptDialog frmContinue = new PromptDialog();
             Form frmContinue = BuildDialog();
+            //frmContinue.Visible = true;
             frmContinue.ShowDialog();
-            
         }
         
         /// <summary>
@@ -66,7 +66,7 @@ namespace BlackjackWFA {
             lblName.Tag = "lblName";
             lblName.Size = new Size(100, 15);
             lblName.Location = new Point(15, 10);
-            lblName.Parent = frmDeal.ParentForm;
+            lblName.Parent = frmDeal;
             frmDeal.Controls.Add(lblName);
 
             //text box for the user's name to be entered.
@@ -76,7 +76,7 @@ namespace BlackjackWFA {
             txtName.Size = new Size(100, 20);
             txtName.Location = new Point(15, 25);
             txtName.TabIndex = 3;
-            txtName.Parent = frmDeal.ParentForm;
+            txtName.Parent = frmDeal;
             txtName.TextChanged += new EventHandler(txtName_TextChanged);
             frmDeal.Controls.Add(txtName);
 
@@ -87,7 +87,7 @@ namespace BlackjackWFA {
             lblDecks.Tag = "lblDecks";
             lblDecks.Size = new Size(129, 13);
             lblDecks.Location = new Point(145, 10);
-            lblDecks.Parent = frmDeal.ParentForm;
+            lblDecks.Parent = frmDeal;
             frmDeal.Controls.Add(lblDecks);
 
             //deck size combo box
@@ -99,7 +99,7 @@ namespace BlackjackWFA {
             cbDecks.Size = new Size(128, 21);
             cbDecks.Location = new Point(145, 25);
             cbDecks.TabIndex = 4;
-            cbDecks.Parent = frmDeal.ParentForm;
+            cbDecks.Parent = frmDeal;
             cbDecks.DropDownClosed += new EventHandler(cbDecks_DropDownClosed);
             frmDeal.Controls.Add(cbDecks);
 
@@ -111,7 +111,7 @@ namespace BlackjackWFA {
             btnDeal.Location = new Point(45, 50);
             btnDeal.TabIndex = 1;
             btnDeal.UseVisualStyleBackColor = true;
-            btnDeal.Parent = frmDeal.ParentForm;
+            btnDeal.Parent = frmDeal;
             btnDeal.Click += new EventHandler(btnDeal_Click);
             frmDeal.Controls.Add(btnDeal);
             frmDeal.AcceptButton = btnDeal;
@@ -124,13 +124,14 @@ namespace BlackjackWFA {
             btnDealQuit.Location = new Point(45, 85);
             btnDealQuit.TabIndex = 2;
             btnDealQuit.UseVisualStyleBackColor = true;
-            btnDealQuit.Parent = frmDeal.ParentForm;
+            btnDealQuit.Parent = frmDeal;
             btnDealQuit.Click += new EventHandler(btnQuit_Click);  // uses the same event handler as the quit button in the main UI.
             frmDeal.Controls.Add(btnDealQuit);
             
             //initialize the rest of the form
             frmDeal.ShowInTaskbar = false;
             //frmDeal.Icon = ((Icon)(resources.GetObject("$this.Icon")));
+            frmDeal.Parent = this.ParentForm;
             frmDeal.Width = 305;
             frmDeal.Height = 140;
             frmDeal.StartPosition = FormStartPosition.CenterParent;
@@ -140,6 +141,7 @@ namespace BlackjackWFA {
             frmDeal.ControlBox = false;
             frmDeal.AcceptButton = btnDeal;
             frmDeal.CancelButton = btnDealQuit;
+            frmDeal.Visible = false;
 
             return frmDeal;
         }
@@ -171,9 +173,9 @@ namespace BlackjackWFA {
         /// <param name="e"></param>
         private void btnDeal_Click(object sender, EventArgs e) {
             Button btnSent = sender as Button;
-            //this.SuspendLayout();
-            btnSent.Parent.Dispose();
-            //this.ResumeLayout(false);
+            btnSent.Parent.Visible = false;
+            //btnSent.Parent.Hide();
+            //btnSent.Parent.Dispose();
             lblPlayerHand.Text = Player1.Name + "\'s Hand";
             //check if the Shoe has been built or if the # of decks was changed from default.
             if (drawPile == null || drawPile.GetDecks() != Decks) {
@@ -187,8 +189,11 @@ namespace BlackjackWFA {
         ///     function to start up the game with the initial draws for each player.
         /// </summary>
         private void StartGame() {
-            BlankSheet();
-            
+            //BlankHand(Player1, gbPlayer);
+            //BlankHand(Dealer, gbDealer);
+            Player1.ClearHand();
+            Dealer.ClearHand();
+
             for (int x = 0; x < 2; x++) {
                 Player1.Draw(drawPile.Deal());
                 Dealer.Draw(drawPile.Deal());
@@ -197,16 +202,21 @@ namespace BlackjackWFA {
             DisplayHand(Dealer, rtbDealer, gbDealer);
         }
 
-        private void BlankSheet() {
-            //gbPlayer.Dispose();
-            Player1.ClearHand();
-            //gbPlayer.Refresh();
-            //gbPlayer.Show();
-            //gbDealer.Dispose();
-            Dealer.ClearHand();
-            //gbDealer.Refresh();
-            //gbDealer.Show();            
-        }
+        /*/// <summary>
+        ///     clear the hand and blank out the picture boxes in the groupbox for the chosen hand
+        /// </summary>
+        /// <param name="hand"></param>
+        /// <param name="gBox"></param>
+        private void BlankHand(BJPlayer hand, GroupBox gBox) {
+            hand.ClearHand();
+            if (gBox.HasChildren) {
+                foreach (Control ctrl in gBox.Controls) {
+                    gBox.Controls.Remove(ctrl);
+                    ctrl.Dispose();
+                }
+                gBox.Refresh();
+            }
+        }*/
 
         /// <summary>
         ///     draw the hand provided in the provided box
@@ -216,26 +226,24 @@ namespace BlackjackWFA {
         private void DisplayHand(BJPlayer hand, RichTextBox textBox, GroupBox groupBox) {
             textBox.Clear();
             textBox.Text = hand.Score.ToString();
-
-            //Point point = new Point(groupBox.Location.X, groupBox.Location.Y);
-            Point point = new Point(10, 20);
-            foreach (PictureBox cardPicture in hand.CardPictures) {
-                cardPicture.Location = (point);
-                if (cardPicture.Image == null) {
-                    cardPicture.Image = (Image)Resources.GetObject("ZB_Joker");
-                }
-                Controls.Add(cardPicture);
-                cardPicture.Parent = groupBox;
-                cardPicture.BringToFront();
+            
+            Point point = new Point(groupBox.Padding.Left, groupBox.Padding.Top);
+            var cardPicBoxes = new List<PictureBox>();
+            var cardPictures = hand.GetCardPictures();  // GetCardPictures() returns a List<Image>
+            foreach (Image picture in cardPictures) {
+                var cardPic = new PictureBox();
+                cardPic.Image = picture;
+                cardPic.SizeMode = PictureBoxSizeMode.StretchImage;
+                cardPic.Size = new Size(135, 196);
+                cardPic.Location = point;
+                cardPicBoxes.Add(cardPic);
                 point.X += 30;
             }
-            //Leftovers from when it was text-based
-            /*textBox.Text = hand.Flop();
-            if (hand.Bust) {
-                textBox.Text += Environment.NewLine + hand.Name + " busted!";
-            } else if (hand.Stand) {
-                textBox.Text += Environment.NewLine + hand.Name + " stands.";
-            }*/
+            foreach (PictureBox pb in cardPicBoxes){
+                Controls.Add(pb);
+                pb.Parent = groupBox;
+                pb.BringToFront();
+            }
         }
 
         /// <summary>
@@ -362,7 +370,7 @@ namespace BlackjackWFA {
         private void btnHit_Click(object sender, EventArgs e) {
             TakeTurn(Player1, rtbPlayer, gbPlayer);
             if (Player1.Bust || Player1.BlackJack || Player1.Stand) {
-                //Dealer.Turn = true;
+                Dealer.Turn = true;
                 DealerTurn();
             }
         }
@@ -375,7 +383,7 @@ namespace BlackjackWFA {
         private void btnStand_Click(object sender, EventArgs e) {
             Player1.Stand = true;
             DisplayHand(Player1, rtbPlayer, gbPlayer);
-            //Dealer.Turn = true;
+            Dealer.Turn = true;
             DealerTurn();
         }
 
