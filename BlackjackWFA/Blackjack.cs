@@ -23,6 +23,27 @@ namespace BlackjackWFA {
 
         public Blackjack() {
             InitializeComponent();
+            InitializeCardBoxes(ref gbDealer);
+            InitializeCardBoxes(ref gbPlayer);
+        }
+
+        private void InitializeCardBoxes(ref GroupBox groupBox) {
+            Point point = new Point(groupBox.Padding.Left, groupBox.Padding.Top);
+
+            for (int i = 0; i < 21; i++) {
+                var cardBox = new PictureBox();
+                cardBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                cardBox.Size = new Size(135, 196);
+                cardBox.Location = point;
+                cardBox.Parent = groupBox;
+                cardBox.Name = groupBox.Name + i.ToString();
+                cardBox.Image = (Image)Resources.GetObject("Back_Side");
+                groupBox.Controls.Add(cardBox);
+                cardBox.BringToFront();
+                if(i < 7) {
+                    point.X += 30;
+                }
+            }
         }
 
         /// <summary>
@@ -40,6 +61,7 @@ namespace BlackjackWFA {
         ///     creates and displays a dialog to ask the player if they want to play the game.
         /// </summary>
         private void RequestDeal() {
+            SuspendLayout();
             //PromptDialog frmContinue = new PromptDialog();
             Form frmContinue = BuildDialog();
             //frmContinue.Visible = true;
@@ -130,7 +152,6 @@ namespace BlackjackWFA {
             
             //initialize the rest of the form
             frmDeal.ShowInTaskbar = false;
-            //frmDeal.Icon = ((Icon)(resources.GetObject("$this.Icon")));
             frmDeal.Parent = this.ParentForm;
             frmDeal.Width = 305;
             frmDeal.Height = 140;
@@ -189,10 +210,10 @@ namespace BlackjackWFA {
         ///     function to start up the game with the initial draws for each player.
         /// </summary>
         private void StartGame() {
-            //BlankHand(Player1, gbPlayer);
-            //BlankHand(Dealer, gbDealer);
-            Player1.ClearHand();
-            Dealer.ClearHand();
+            BlankHand(Player1, gbPlayer);
+            BlankHand(Dealer, gbDealer);
+            //Player1.ClearHand();
+            //Dealer.ClearHand();
 
             for (int x = 0; x < 2; x++) {
                 Player1.Draw(drawPile.Deal());
@@ -200,23 +221,22 @@ namespace BlackjackWFA {
             }
             DisplayHand(Player1, rtbPlayer, gbPlayer);
             DisplayHand(Dealer, rtbDealer, gbDealer);
+
+            ResumeLayout(true);
         }
 
-        /*/// <summary>
+        /// <summary>
         ///     clear the hand and blank out the picture boxes in the groupbox for the chosen hand
         /// </summary>
         /// <param name="hand"></param>
         /// <param name="gBox"></param>
         private void BlankHand(BJPlayer hand, GroupBox gBox) {
             hand.ClearHand();
-            if (gBox.HasChildren) {
-                foreach (Control ctrl in gBox.Controls) {
-                    gBox.Controls.Remove(ctrl);
-                    ctrl.Dispose();
-                }
-                gBox.Refresh();
+            foreach (PictureBox pb in gBox.Controls) {
+                pb.Image = null;
             }
-        }*/
+            gBox.Refresh();
+        }
 
         /// <summary>
         ///     draw the hand provided in the provided box
@@ -227,7 +247,7 @@ namespace BlackjackWFA {
             textBox.Clear();
             textBox.Text = hand.Score.ToString();
             
-            Point point = new Point(groupBox.Padding.Left, groupBox.Padding.Top);
+            /*Point point = new Point(groupBox.Padding.Left, groupBox.Padding.Top);
             var cardPicBoxes = new List<PictureBox>();
             var cardPictures = hand.GetCardPictures();  // GetCardPictures() returns a List<Image>
             foreach (Image picture in cardPictures) {
@@ -238,11 +258,22 @@ namespace BlackjackWFA {
                 cardPic.Location = point;
                 cardPicBoxes.Add(cardPic);
                 point.X += 30;
-            }
-            foreach (PictureBox pb in cardPicBoxes){
-                Controls.Add(pb);
-                pb.Parent = groupBox;
+            }*/
+            /*foreach (PictureBox pb in groupBox.Controls){
+                //groupBox.Controls.Add(pb);
+                //pb.Parent = groupBox;
+                pb.Image = hand.InHand.ElementAt(groupBox.Controls.IndexOf(pb)).Picture;
                 pb.BringToFront();
+            }*/
+            foreach (PictureBox pb in groupBox.Controls){
+                //groupBox.Controls.Add(pb);
+                //pb.Parent = groupBox;
+                try {
+                    pb.Image = hand.InHand.ElementAt(groupBox.Controls.IndexOf(pb)).Picture;
+                    pb.BringToFront();
+                } catch (ArgumentOutOfRangeException) {
+                    break;
+                }
             }
         }
 
