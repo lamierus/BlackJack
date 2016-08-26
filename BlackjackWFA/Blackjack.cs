@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Resources;
@@ -14,20 +11,23 @@ namespace BlackjackWFA {
     public partial class Blackjack : Form {
         static Shoe drawPile;
         static BJPlayer Player1 = new BJPlayer();
+        static List<PictureBox> Player1Cards = new List<PictureBox>();
         static BJDealer Dealer = new BJDealer();
+        static List<PictureBox> DealerCards = new List<PictureBox>();
         static bool PlayingGame = false;
-        int Decks = 5;
+        int Decks = 1;
         private bool AllowClose = false;
         //allow all resources for the project to be available for use here, like icon and images
         ResourceManager Resources = Engine.Properties.Resources.ResourceManager;
 
         public Blackjack() {
+            drawPile = new Shoe(Decks);
             InitializeComponent();
-            InitializeCardBoxes(ref gbDealer);
-            InitializeCardBoxes(ref gbPlayer);
+            InitializeCardBoxes(ref gbDealer, DealerCards);
+            InitializeCardBoxes(ref gbPlayer, Player1Cards);
         }
 
-        private void InitializeCardBoxes(ref GroupBox groupBox) {
+        private void InitializeCardBoxes(ref GroupBox groupBox, List<PictureBox> picBoxes) {
             Point point = new Point(groupBox.Padding.Left, groupBox.Padding.Top);
 
             for (int i = 0; i < 21; i++) {
@@ -40,6 +40,7 @@ namespace BlackjackWFA {
                 cardBox.Image = (Image)Resources.GetObject("Back_Side");
                 groupBox.Controls.Add(cardBox);
                 cardBox.BringToFront();
+                picBoxes.Add(cardBox);
                 if(i < 7) {
                     point.X += 30;
                 }
@@ -195,8 +196,6 @@ namespace BlackjackWFA {
         private void btnDeal_Click(object sender, EventArgs e) {
             Button btnSent = sender as Button;
             btnSent.Parent.Visible = false;
-            //btnSent.Parent.Hide();
-            //btnSent.Parent.Dispose();
             lblPlayerHand.Text = Player1.Name + "\'s Hand";
             //check if the Shoe has been built or if the # of decks was changed from default.
             if (drawPile == null || drawPile.GetDecks() != Decks) {
@@ -210,18 +209,16 @@ namespace BlackjackWFA {
         ///     function to start up the game with the initial draws for each player.
         /// </summary>
         private void StartGame() {
-            BlankHand(Player1, gbPlayer);
-            BlankHand(Dealer, gbDealer);
-            //Player1.ClearHand();
-            //Dealer.ClearHand();
+            BlankHand(Player1, Player1Cards);
+            BlankHand(Dealer, DealerCards);
 
             for (int x = 0; x < 2; x++) {
-                Player1.Draw(drawPile.Deal());
-                Dealer.Draw(drawPile.Deal());
+                TakeTurn(Player1, rtbPlayer, Player1Cards);
+                TakeTurn(Dealer, rtbDealer, DealerCards);
             }
-            DisplayHand(Player1, rtbPlayer, gbPlayer);
-            DisplayHand(Dealer, rtbDealer, gbDealer);
 
+            DisplayHand(Player1, rtbPlayer, Player1Cards);
+            DisplayHand(Dealer, rtbDealer,DealerCards);
             ResumeLayout(true);
         }
 
@@ -230,12 +227,11 @@ namespace BlackjackWFA {
         /// </summary>
         /// <param name="hand"></param>
         /// <param name="gBox"></param>
-        private void BlankHand(BJPlayer hand, GroupBox gBox) {
+        private void BlankHand(BJPlayer hand, List<PictureBox> picBox) {
             hand.ClearHand();
-            foreach (PictureBox pb in gBox.Controls) {
+            foreach (PictureBox pb in picBox) {
                 pb.Image = null;
             }
-            gBox.Refresh();
         }
 
         /// <summary>
@@ -243,37 +239,14 @@ namespace BlackjackWFA {
         /// </summary>
         /// <param name="hand"></param>
         /// <param name="textBox"></param>
-        private void DisplayHand(BJPlayer hand, RichTextBox textBox, GroupBox groupBox) {
+        private void DisplayHand(BJPlayer hand, RichTextBox textBox, List<PictureBox> picBox) {
             textBox.Clear();
             textBox.Text = hand.Score.ToString();
+            var cardPics = hand.GetCardPictures();
             
-            /*Point point = new Point(groupBox.Padding.Left, groupBox.Padding.Top);
-            var cardPicBoxes = new List<PictureBox>();
-            var cardPictures = hand.GetCardPictures();  // GetCardPictures() returns a List<Image>
-            foreach (Image picture in cardPictures) {
-                var cardPic = new PictureBox();
-                cardPic.Image = picture;
-                cardPic.SizeMode = PictureBoxSizeMode.StretchImage;
-                cardPic.Size = new Size(135, 196);
-                cardPic.Location = point;
-                cardPicBoxes.Add(cardPic);
-                point.X += 30;
-            }*/
-            /*foreach (PictureBox pb in groupBox.Controls){
-                //groupBox.Controls.Add(pb);
-                //pb.Parent = groupBox;
-                pb.Image = hand.InHand.ElementAt(groupBox.Controls.IndexOf(pb)).Picture;
-                pb.BringToFront();
-            }*/
-            foreach (PictureBox pb in groupBox.Controls){
-                //groupBox.Controls.Add(pb);
-                //pb.Parent = groupBox;
-                try {
-                    pb.Image = hand.InHand.ElementAt(groupBox.Controls.IndexOf(pb)).Picture;
-                    pb.BringToFront();
-                } catch (ArgumentOutOfRangeException) {
-                    break;
-                }
+            for (int i = 0; i < hand.CardsInHand; i++) {
+                picBox.ElementAt(i).Image = cardPics.ElementAt(i);
+                picBox.ElementAt(i).BringToFront();
             }
         }
 
@@ -284,18 +257,59 @@ namespace BlackjackWFA {
         /// </summary>
         /// <param name="hand"></param>
         /// <param name="textBox"></param>
-        private void TakeTurn(BJPlayer hand, RichTextBox textBox, GroupBox groupBox) {
+        private void TakeTurn(BJPlayer hand, RichTextBox textBox, List<PictureBox> picBox) {
             if (hand.Bust) {
-                DisplayHand(hand, textBox, groupBox);
+                DisplayHand(hand, textBox, picBox);
                 return;
             }
             if (hand.Stand) {
-                DisplayHand(hand, textBox, groupBox);
+                DisplayHand(hand, textBox, picBox);
                 return;
             }
-            hand.Draw(drawPile.Deal());
-            DisplayHand(hand, textBox, groupBox);
+            Card drawn = new Card();
+
+            if (!drawPile.Deal(out drawn)) {
+                //ShowReshuffleDialog();
+                drawPile.Reshuffle(Decks);
+                drawPile.Deal(out drawn);
+            }
+            hand.Draw(drawn);
         }
+        /*
+        private void ShowReshuffleDialog() {
+            Form frmReshuffle = new Form();
+            RichTextBox rtbReshuffle = new RichTextBox();
+
+            //setting up the rich text box
+            rtbReshuffle.Name = "rtbReshuffle";
+            rtbReshuffle.Tag = "rtbReshuffle";
+            rtbReshuffle.SelectionAlignment = HorizontalAlignment.Center;
+            rtbReshuffle.ReadOnly = true;
+            rtbReshuffle.ScrollBars = RichTextBoxScrollBars.None;
+            rtbReshuffle.TabStop = false;
+            rtbReshuffle.Text = Environment.NewLine + "RESHUFFLING SHOE!" + Environment.NewLine;
+            rtbReshuffle.Dock = DockStyle.Fill;
+            rtbReshuffle.Font = new Font("Microsoft Sans Serif", 22F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+            frmReshuffle.Controls.Add(rtbReshuffle);
+
+            //setting up the rest of the winner display form
+            frmReshuffle.Parent = ParentForm;
+            frmReshuffle.ShowInTaskbar = false;
+            frmReshuffle.Height = 100;
+            frmReshuffle.Width = 400;
+            frmReshuffle.MinimizeBox = false;
+            frmReshuffle.MaximizeBox = false;
+            frmReshuffle.StartPosition = FormStartPosition.CenterParent;
+            frmReshuffle.Focus();
+            //frmReshuffle.ControlBox = false;
+            frmReshuffle.ShowDialog();
+
+            drawPile.Reshuffle(Decks);
+
+            Thread.Sleep(1000);
+            
+            frmReshuffle.Close();
+        }*/
 
         /// <summary>
         ///     logic to decide how the dealer takes it's turn
@@ -303,12 +317,12 @@ namespace BlackjackWFA {
         private void DealerTurn() {
             if (!Player1.Bust && !Player1.BlackJack && ((Player1.Score > Dealer.Score) || Dealer.Score < 18)) {
                 do {
-                    TakeTurn(Dealer, rtbDealer, gbDealer);
+                    TakeTurn(Dealer, rtbDealer, DealerCards);
                 } while (!Dealer.Bust && !Dealer.Stand);
             } else {
                 Dealer.Stand = true;
             }
-            DisplayHand(Dealer, rtbDealer, gbDealer);
+            DisplayHand(Dealer, rtbDealer, DealerCards);
             CheckWinner();
         }
 
@@ -366,13 +380,15 @@ namespace BlackjackWFA {
             Winner.Controls.Add(rtbWinner);
 
             //setting up the rest of the winner display form
-            Winner.Height = 150;
+            Winner.ShowInTaskbar = false;
+            Winner.Height = 125;
             Winner.Width = 250;
             Winner.MinimizeBox = false;
             Winner.MaximizeBox = false;
             Winner.StartPosition = FormStartPosition.CenterParent;
             Winner.MouseClick += new MouseEventHandler(Winner_Close);
             Winner.KeyPress += new KeyPressEventHandler(Winner_Close);
+            Winner.ControlBox = false;
             Winner.Focus();
             Winner.ShowDialog();
 
@@ -389,7 +405,7 @@ namespace BlackjackWFA {
         }
         private void rtbWinner_Close(object sender, EventArgs e) {
             RichTextBox sent = sender as RichTextBox;
-            sent.Parent.Dispose();
+            sent.Parent.Visible = false;
         }
 
         /// <summary>
@@ -399,7 +415,8 @@ namespace BlackjackWFA {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnHit_Click(object sender, EventArgs e) {
-            TakeTurn(Player1, rtbPlayer, gbPlayer);
+            TakeTurn(Player1, rtbPlayer, Player1Cards);
+            DisplayHand(Player1, rtbPlayer, Player1Cards);
             if (Player1.Bust || Player1.BlackJack || Player1.Stand) {
                 Dealer.Turn = true;
                 DealerTurn();
@@ -413,7 +430,7 @@ namespace BlackjackWFA {
         /// <param name="e"></param>
         private void btnStand_Click(object sender, EventArgs e) {
             Player1.Stand = true;
-            DisplayHand(Player1, rtbPlayer, gbPlayer);
+            DisplayHand(Player1, rtbPlayer, Player1Cards);
             Dealer.Turn = true;
             DealerTurn();
         }
@@ -426,7 +443,6 @@ namespace BlackjackWFA {
         private void btnQuit_Click(object sender, EventArgs e) {
             AllowClose = true;
             this.Close();
-            //Environment.Exit(0);
         }
         
         /// <summary>

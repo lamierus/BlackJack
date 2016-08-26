@@ -17,6 +17,11 @@ namespace Engine {
             BuildDeck();
             Shuffle();
         }
+
+        ~Deck() {
+            cardDeck = null;
+        }
+
         //build the deck in order
         private void BuildDeck() {
             cardDeck = new Card[CardsPerSuit * Suits];
