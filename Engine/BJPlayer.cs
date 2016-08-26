@@ -27,6 +27,7 @@ namespace Engine {
         //draw a card from the pile and place it in the player's hand
         new public void Draw(Card card) {
             InHand.Add(card);
+            CardsInHand++;
             ScoreHand();
         }
 
@@ -89,12 +90,13 @@ namespace Engine {
         }
 
         //empty out the hand and reset the boolean properties.
-        new public void ClearHand() {
+        new public virtual void ClearHand() {
             InHand.Clear();
             BlackJack = false;
             Bust = false;
             Stand = false;
             Score = 0;
+            CardsInHand = 0;
         }
     }
 }

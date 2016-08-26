@@ -16,13 +16,14 @@ namespace Engine {
         }
 
         //blank out the dealer's hand and all boolean properties
-        new public void ClearHand() {
+        public override void ClearHand() {
             InHand.Clear();
             BlackJack = false;
             Bust = false;
             Stand = false;
             Turn = false;
             Score = 0;
+            CardsInHand = 0;
         }
 
         //score the hand, based upon Blackjack rules

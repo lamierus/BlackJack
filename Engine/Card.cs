@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Resources;
 
 namespace Engine {
     public class Card : IEquatable<Card> {//IComparable, IEquatable<Card> {
@@ -8,9 +9,10 @@ namespace Engine {
         public Image Picture { get; set; }
         
         //set up a default card object, with optional overloads to set the suit and number
-        public Card(int Suit = 0, int Number = 0) {
+        public Card(int Suit = 0, int Number = 0, Image picture = null) {
             this.Suit = Suit;
             this.Number = Number;
+            this.Picture = picture;
         }
         //allow the card to be output as a string value
         public override string ToString() {
