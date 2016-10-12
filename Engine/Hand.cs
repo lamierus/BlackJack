@@ -22,10 +22,12 @@ namespace Engine {
             CardsInHand = 0;
             Count++;
         }
+
         ~Hand() {
             Count--;
             InHand.Clear();
         }
+
         //sort the player's hand, if required. first by suit, then by number
         public void Sort() {
             List<Card> NewHand = new List<Card>();
@@ -46,12 +48,14 @@ namespace Engine {
             InHand.Clear();
             InHand = NewHand;
         }
+
         //add a card to the user's hand list
         public void Draw(Card card) {
             InHand.Add(card);
             CardsInHand++;
             ScoreHand();
         }
+
         //remove a card from the user's hand.
         public bool Discard(Card disc) {
             if (InHand.Remove(disc)) {
@@ -61,6 +65,7 @@ namespace Engine {
             }
             return false;
         }
+
         //add up the current score of the user's hand
         protected virtual void ScoreHand() {
             foreach (Card card in InHand) {
@@ -71,16 +76,19 @@ namespace Engine {
                 }
             }
         }
+
         //remove all cards and reset the score of the Player's hand
         public void ClearHand() {
             InHand.Clear();
             Score = 0;
             CardsInHand = 0;
         }
+
         //return the current number of Players in the game.
         public int NumOfPlayers() {
             return Count;
         }
+
         //display all of the cards and the score of said hand
         public void ConsoleFlop() {
             foreach (Card card in InHand) {

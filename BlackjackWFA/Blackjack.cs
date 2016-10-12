@@ -68,153 +68,30 @@ namespace BlackjackWFA {
         ///     creates and displays a dialog to ask the player if they want to play the game.
         /// </summary>
         private void RequestDeal() {
+            using (var form = new NewGame(Player1)) {
+                var result = form.ShowDialog();
+                if (result == DialogResult.Cancel) {
+                    Close();
+                } else {
+                    Player1 = form.ReturnPlayer;
+                    if (drawPile == null || form.ReturnNumDecks != Decks) {
+                        Decks = form.ReturnNumDecks;
+                        BuildShoe();
+                    }
+                }
+            }
+            lblPlayerHand.Text = Player1.Name + "\'s Hand";
+            PlayingGame = true;
+            StartGame();
             //SuspendLayout();
-            Form gbContinue = BuildDialog();
+            //Form gbContinue = BuildDialog();
             //gbContinue.Visible = true;
-            gbContinue.ShowDialog();
+            //gbContinue.ShowDialog();
             //gbContinue.BringToFront();
             //gbRequestDeal.Visible = true;
             //gbRequestDeal.BringToFront();
         }
         
-        /// <summary>
-        ///     returns the built form, to accept input from the user.
-        /// </summary>
-        /// <returns></returns>
-        private Form BuildDialog() {
-            //declaring all of the parts at the beginning.
-            Form frmDeal = new Form();
-            Label lblName = new Label();
-            TextBox txtName = new TextBox();
-            Label lblDecks = new Label();
-            ComboBox cbDecks = new ComboBox();
-            Button btnDeal = new Button();
-            Button btnDealQuit = new Button();
-
-            // Label for the text box
-            lblName.Text = "Enter your Name";
-            lblName.Name = "lblName";
-            lblName.Tag = "lblName";
-            lblName.Size = new Size(100, 15);
-            lblName.Location = new Point(15, 10);
-            lblName.Parent = frmDeal;
-            frmDeal.Controls.Add(lblName);
-
-            //text box for the user's name to be entered.
-            txtName.Text = Player1.Name;
-            txtName.Name = "txtName";
-            txtName.Tag = "txtName";
-            txtName.Size = new Size(100, 20);
-            txtName.Location = new Point(15, 25);
-            txtName.TabIndex = 3;
-            txtName.Parent = frmDeal;
-            txtName.TextChanged += new EventHandler(txtName_TextChanged);
-            frmDeal.Controls.Add(txtName);
-
-            //label for the decksize combo box
-            lblDecks.AutoSize = true;
-            lblDecks.Text = "Number of Decks in Shoe";
-            lblDecks.Name = "lblDecks";
-            lblDecks.Tag = "lblDecks";
-            lblDecks.Size = new Size(129, 13);
-            lblDecks.Location = new Point(145, 10);
-            lblDecks.Parent = frmDeal;
-            frmDeal.Controls.Add(lblDecks);
-
-            //deck size combo box
-            cbDecks.DataSource = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };  // creating and assigning the list for the combo box
-            cbDecks.FormattingEnabled = false;
-            //cbDecks.SelectedIndex = 4;    //can't seem to get this to work, properly, anymore.
-            cbDecks.Name = "cbDecks";
-            cbDecks.Tag = "cbDecks";
-            cbDecks.Size = new Size(128, 21);
-            cbDecks.Location = new Point(145, 25);
-            cbDecks.TabIndex = 4;
-            cbDecks.Parent = frmDeal;
-            cbDecks.DropDownClosed += new EventHandler(cbDecks_DropDownClosed);
-            frmDeal.Controls.Add(cbDecks);
-
-            //button to start the game.
-            btnDeal.Text = "Deal me in!";
-            btnDeal.Name = "btnDeal";
-            btnDeal.Tag = "btnDeal";
-            btnDeal.Size = new Size(200, 30);
-            btnDeal.Location = new Point(45, 50);
-            btnDeal.TabIndex = 1;
-            btnDeal.UseVisualStyleBackColor = true;
-            btnDeal.Parent = frmDeal;
-            btnDeal.Click += new EventHandler(btnDeal_Click);
-            frmDeal.Controls.Add(btnDeal);
-            //frmDeal.AcceptButton = btnDeal;
-
-            //button to quit the game
-            btnDealQuit.Text = "I don't want to play.";
-            btnDealQuit.Name = "btnDealQuit";
-            btnDealQuit.Tag = "btnDealQuit";
-            btnDealQuit.Size = new Size(200, 30);
-            btnDealQuit.Location = new Point(45, 85);
-            btnDealQuit.TabIndex = 2;
-            btnDealQuit.UseVisualStyleBackColor = true;
-            btnDealQuit.Parent = frmDeal;
-            btnDealQuit.Click += new EventHandler(btnQuit_Click);  // uses the same event handler as the quit button in the main UI.
-            frmDeal.Controls.Add(btnDealQuit);
-
-            //initialize the rest of the form
-            frmDeal.Parent = this.ParentForm;
-            frmDeal.ShowInTaskbar = false;
-            frmDeal.StartPosition = FormStartPosition.CenterParent;
-            frmDeal.Enabled = true;
-            frmDeal.BackColor = SystemColors.Control;
-            frmDeal.Name = "frmDeal";
-            frmDeal.Tag = "frmDeal";
-            frmDeal.Size = new Size(305, 140);
-            frmDeal.MaximizeBox = false;
-            frmDeal.MinimizeBox = false;
-            frmDeal.AutoScaleMode = AutoScaleMode.Font;
-            frmDeal.ControlBox = false;
-            frmDeal.AcceptButton = btnDeal;
-            frmDeal.CancelButton = btnDealQuit;
-
-            return frmDeal;
-        }
-
-        /// <summary>
-        ///     update the decks variable after the dropdown is closed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cbDecks_DropDownClosed(object sender, EventArgs e) {
-            ComboBox decks = sender as ComboBox;
-            Decks  = (int)decks.SelectedItem;
-        }
-
-        /// <summary>
-        ///     update the player object's name
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void txtName_TextChanged(object sender, EventArgs e) {
-            TextBox input = sender as TextBox;
-            Player1.Name = input.Text;
-        }
-
-        /// <summary>
-        ///     start the game from here.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnDeal_Click(object sender, EventArgs e) {
-            Button btnSent = sender as Button;
-            btnSent.Parent.Hide();
-            lblPlayerHand.Text = Player1.Name + "\'s Hand";
-            //check if the Shoe has been built or if the # of decks was changed from default.
-            if (drawPile == null || drawPile.GetDecks() != Decks) {
-                drawPile = new Shoe(Decks);
-            }
-            PlayingGame = true;
-            StartGame();
-        }
-
         /// <summary>
         ///     function to start up the game with the initial draws for each player.
         /// </summary>

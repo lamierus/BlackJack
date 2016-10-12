@@ -31,3 +31,4 @@ C:\Users\simon.je\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.
 C:\Users\simon.je\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.csproj.GenerateResource.Cache
 C:\Users\simon.je\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.exe
 C:\Users\simon.je\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.pdb
+C:\Users\simon.je\Source\Repos\BlackjackWFA\BlackjackWFA\obj\Debug\BlackjackWFA.NewGame.resources
