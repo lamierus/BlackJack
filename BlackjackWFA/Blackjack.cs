@@ -21,10 +21,16 @@ namespace BlackjackWFA {
         ResourceManager Resources = Engine.Properties.Resources.ResourceManager;
 
         public Blackjack() {
-            drawPile = new Shoe(Decks);
+            //drawPile = new Shoe(Decks);
+            Thread shoe = new Thread(BuildShoe);
+            shoe.Start();
             InitializeComponent();
             InitializeCardBoxes(ref gbDealer, DealerCards);
             InitializeCardBoxes(ref gbPlayer, Player1Cards);
+        }
+
+        private void BuildShoe() {
+            drawPile = new Shoe(Decks);
         }
 
         private void InitializeCardBoxes(ref GroupBox groupBox, List<PictureBox> picBoxes) {
@@ -62,11 +68,13 @@ namespace BlackjackWFA {
         ///     creates and displays a dialog to ask the player if they want to play the game.
         /// </summary>
         private void RequestDeal() {
-            SuspendLayout();
-            //PromptDialog frmContinue = new PromptDialog();
-            Form frmContinue = BuildDialog();
-            //frmContinue.Visible = true;
-            frmContinue.ShowDialog();
+            //SuspendLayout();
+            Form gbContinue = BuildDialog();
+            //gbContinue.Visible = true;
+            gbContinue.ShowDialog();
+            //gbContinue.BringToFront();
+            //gbRequestDeal.Visible = true;
+            //gbRequestDeal.BringToFront();
         }
         
         /// <summary>
@@ -137,7 +145,7 @@ namespace BlackjackWFA {
             btnDeal.Parent = frmDeal;
             btnDeal.Click += new EventHandler(btnDeal_Click);
             frmDeal.Controls.Add(btnDeal);
-            frmDeal.AcceptButton = btnDeal;
+            //frmDeal.AcceptButton = btnDeal;
 
             //button to quit the game
             btnDealQuit.Text = "I don't want to play.";
@@ -150,20 +158,22 @@ namespace BlackjackWFA {
             btnDealQuit.Parent = frmDeal;
             btnDealQuit.Click += new EventHandler(btnQuit_Click);  // uses the same event handler as the quit button in the main UI.
             frmDeal.Controls.Add(btnDealQuit);
-            
+
             //initialize the rest of the form
-            frmDeal.ShowInTaskbar = false;
             frmDeal.Parent = this.ParentForm;
-            frmDeal.Width = 305;
-            frmDeal.Height = 140;
+            frmDeal.ShowInTaskbar = false;
             frmDeal.StartPosition = FormStartPosition.CenterParent;
+            frmDeal.Enabled = true;
+            frmDeal.BackColor = SystemColors.Control;
+            frmDeal.Name = "frmDeal";
+            frmDeal.Tag = "frmDeal";
+            frmDeal.Size = new Size(305, 140);
             frmDeal.MaximizeBox = false;
             frmDeal.MinimizeBox = false;
             frmDeal.AutoScaleMode = AutoScaleMode.Font;
             frmDeal.ControlBox = false;
             frmDeal.AcceptButton = btnDeal;
             frmDeal.CancelButton = btnDealQuit;
-            frmDeal.Visible = false;
 
             return frmDeal;
         }
@@ -195,7 +205,7 @@ namespace BlackjackWFA {
         /// <param name="e"></param>
         private void btnDeal_Click(object sender, EventArgs e) {
             Button btnSent = sender as Button;
-            btnSent.Parent.Visible = false;
+            btnSent.Parent.Hide();
             lblPlayerHand.Text = Player1.Name + "\'s Hand";
             //check if the Shoe has been built or if the # of decks was changed from default.
             if (drawPile == null || drawPile.GetDecks() != Decks) {
@@ -219,7 +229,7 @@ namespace BlackjackWFA {
 
             DisplayHand(Player1, rtbPlayer, Player1Cards);
             DisplayHand(Dealer, rtbDealer,DealerCards);
-            ResumeLayout(true);
+            //ResumeLayout(true);
         }
 
         /// <summary>
@@ -275,8 +285,8 @@ namespace BlackjackWFA {
             }
             hand.Draw(drawn);
         }
-        /*
-        private void ShowReshuffleDialog() {
+        
+        /*private void ShowReshuffleDialog() {
             Form frmReshuffle = new Form();
             RichTextBox rtbReshuffle = new RichTextBox();
 
@@ -415,11 +425,13 @@ namespace BlackjackWFA {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnHit_Click(object sender, EventArgs e) {
-            TakeTurn(Player1, rtbPlayer, Player1Cards);
-            DisplayHand(Player1, rtbPlayer, Player1Cards);
-            if (Player1.Bust || Player1.BlackJack || Player1.Stand) {
-                Dealer.Turn = true;
-                DealerTurn();
+            if (PlayingGame) {
+                TakeTurn(Player1, rtbPlayer, Player1Cards);
+                DisplayHand(Player1, rtbPlayer, Player1Cards);
+                if (Player1.Bust || Player1.BlackJack || Player1.Stand) {
+                    Dealer.Turn = true;
+                    DealerTurn();
+                }
             }
         }
 
@@ -429,10 +441,12 @@ namespace BlackjackWFA {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnStand_Click(object sender, EventArgs e) {
-            Player1.Stand = true;
-            DisplayHand(Player1, rtbPlayer, Player1Cards);
-            Dealer.Turn = true;
-            DealerTurn();
+            if (PlayingGame) {
+                Player1.Stand = true;
+                DisplayHand(Player1, rtbPlayer, Player1Cards);
+                Dealer.Turn = true;
+                DealerTurn();
+            }
         }
 
         /// <summary>
