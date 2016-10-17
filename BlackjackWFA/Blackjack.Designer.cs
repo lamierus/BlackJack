@@ -183,7 +183,8 @@
             this.Name = "Blackjack";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Blackjack";
-            this.Activated += new System.EventHandler(this.Blackjack_Load);
+            //this.Activated += new System.EventHandler(this.Blackjack_Activated);
+            this.Load += new System.EventHandler(this.Blackjack_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

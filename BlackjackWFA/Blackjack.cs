@@ -15,10 +15,10 @@ namespace BlackjackWFA {
         static BJDealer Dealer = new BJDealer();
         static List<PictureBox> DealerCards = new List<PictureBox>();
         static bool PlayingGame = false;
-        int Decks = 1;
-        private bool AllowClose = false;
+        private int Decks = 5;
+        //private bool AllowClose = false;
         //allow all resources for the project to be available for use here, like icon and images
-        ResourceManager Resources = Engine.Properties.Resources.ResourceManager;
+        private ResourceManager Resources = Engine.Properties.Resources.ResourceManager;
 
         public Blackjack() {
             //drawPile = new Shoe(Decks);
@@ -58,17 +58,19 @@ namespace BlackjackWFA {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Blackjack_Load(object sender, EventArgs e) {
+        private void Blackjack_Activated(object sender, EventArgs e) {
             if (!PlayingGame) {
                 RequestDeal();
             }
         }
 
         /// <summary>
-        ///     creates and displays a dialog to ask the player if they want to play the game.
+        ///     when the window is Loaded, it goes to create the prompt
         /// </summary>
-        private void RequestDeal() {
-            using (var form = new NewGame(Player1)) {
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Blackjack_Load(object sender, EventArgs e) {
+            using (var form = new NewGame(Player1, Decks)) {
                 var result = form.ShowDialog();
                 if (result == DialogResult.Cancel) {
                     Close();
@@ -83,13 +85,27 @@ namespace BlackjackWFA {
             lblPlayerHand.Text = Player1.Name + "\'s Hand";
             PlayingGame = true;
             StartGame();
-            //SuspendLayout();
-            //Form gbContinue = BuildDialog();
-            //gbContinue.Visible = true;
-            //gbContinue.ShowDialog();
-            //gbContinue.BringToFront();
-            //gbRequestDeal.Visible = true;
-            //gbRequestDeal.BringToFront();
+        }
+
+        /// <summary>
+        ///     creates and displays a dialog to ask the player if they want to play the game.
+        /// </summary>
+        private void RequestDeal() {
+            using (var form = new NewGame(Player1, Decks)) {
+                var result = form.ShowDialog();
+                if (result == DialogResult.Cancel) {
+                    Close();
+                } else {
+                    Player1 = form.ReturnPlayer;
+                    if (drawPile == null || form.ReturnNumDecks != Decks) {
+                        Decks = form.ReturnNumDecks;
+                        BuildShoe();
+                    }
+                }
+            }
+            lblPlayerHand.Text = Player1.Name + "\'s Hand";
+            PlayingGame = true;
+            StartGame();
         }
         
         /// <summary>
@@ -106,7 +122,6 @@ namespace BlackjackWFA {
 
             DisplayHand(Player1, rtbPlayer, Player1Cards);
             DisplayHand(Dealer, rtbDealer,DealerCards);
-            //ResumeLayout(true);
         }
 
         /// <summary>
