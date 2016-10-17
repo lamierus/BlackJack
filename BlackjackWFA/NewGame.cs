@@ -15,11 +15,11 @@ namespace BlackjackWFA {
         public BJPlayer ReturnPlayer { get; set; }
         private BindingList<int> NumDecksList = new BindingList<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-        public NewGame(BJPlayer player) {
+        public NewGame(BJPlayer player, int numDecks) {
             InitializeComponent();
 
             cboxDecks.DataSource = NumDecksList;
-            cboxDecks.SelectedIndex = NumDecksList.IndexOf(5);
+            cboxDecks.SelectedIndex = NumDecksList.IndexOf(numDecks);
 
             ReturnPlayer = player;
             txtName.Text = ReturnPlayer.Name;
