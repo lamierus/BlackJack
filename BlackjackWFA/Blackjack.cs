@@ -347,19 +347,7 @@ namespace BlackjackWFA {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnQuit_Click(object sender, EventArgs e) {
-            AllowClose = true;
             this.Close();
-        }
-        
-        /// <summary>
-        ///     check if it's okay to close the window.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            if (!AllowClose) {
-                e.Cancel = true;
-            }
         }
     }
 }
