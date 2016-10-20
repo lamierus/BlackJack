@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Resources;
-using System.Drawing;
 
 namespace Engine {
     public class Shoe {
@@ -49,7 +47,6 @@ namespace Engine {
                 shuffleDeck = r.Next(NumDecks);
             }
         }
-        
         //clear out all sequences and reshuffle the Shoe.
         public void Reshuffle() {
             CardsInShoe = 0;
@@ -58,10 +55,8 @@ namespace Engine {
             InPlay.Clear();
             CardsInDiscard = 0;
             DiscardPile.Clear();
-            GC.Collect();
             BuildDecks();
         }
-
         public void Reshuffle(int numDecks) {
             NumDecks = numDecks;
             CardsInShoe = 0;
@@ -70,37 +65,25 @@ namespace Engine {
             InPlay.Clear();
             CardsInDiscard = 0;
             DiscardPile.Clear();
-            GC.Collect();
             BuildDecks();
         }
-
         //return the # of Cards each deck in the current Shoe contains
         public int GetCardsPerDeck() {
             return (CardsPerSuit * NumSuits);
         }
-
         //return the # of Decks used in the current Shoe
         public int GetDecks() {
             return NumDecks;
         }
-
         //return the # of Suits used in the current Shoe
         public int GetSuits() {
             return NumSuits;
         }
-
         //draw the top card off out of the Shoe Queue and place it in the InPlay sequence
-        public bool Deal(out Card drawn) {
-            if (IsEmpty()) {
-                drawn = new Card(5, 14, (Image)Properties.Resources.ZR_Joker);
-                return false;
-            }
-            drawn = DrawPile.Dequeue();
-            CardsInShoe--;
-            InPlay.Add(drawn);
-            CardsInPlay++;
-            return true;
-                /*Reshuffle();
+        public Card Deal() {
+            Card drawn = new Card();
+            if (this.IsEmpty()) {
+                Reshuffle();
                 drawn = DrawPile.Dequeue();
                 this.CardsInShoe--;
                 InPlay.Add(drawn);
@@ -111,23 +94,20 @@ namespace Engine {
                 InPlay.Add(drawn);
                 this.CardsInPlay++;
             }
-            return drawn;*/
+            return drawn;
         }
-
         //discard the chosen card from the cards that are currently in play
         public void Discard(Card disc) {
             if (InPlay.Remove(disc)) {
                 DiscardPile.Push(disc);
-                CardsInPlay--;
-                CardsInDiscard++;
+                this.CardsInPlay--;
+                this.CardsInDiscard++;
             }
         }
-
         //Test if the Shoe is empty
         public bool IsEmpty() {
             return DrawPile.Count == 0;
         }
-
         //This will output a card's suit # and number on a line for every card stored in every sequence of the current shoe object
         public void ConsoleFlop() {
             Console.WriteLine("Draw Pile");

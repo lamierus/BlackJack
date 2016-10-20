@@ -13,5 +13,3 @@ C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\bin\Debug\Engine.pdb
 C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.csprojResolveAssemblyReference.cache
 C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.dll
 C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.pdb
-C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.Properties.Resources.resources
-C:\Users\simon.je\Source\Repos\BlackjackWFA\Engine\obj\Debug\Engine.csproj.GenerateResource.Cache

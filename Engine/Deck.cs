@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Resources;
-using System.Drawing;
 
 namespace Engine {
     public class Deck {
@@ -8,7 +6,6 @@ namespace Engine {
         private int Suits;
         private int CardsPerSuit;
         public int DeckSize { get; set; }
-        private ResourceManager Resources = Properties.Resources.ResourceManager;
         //default deck call with 4 suits and 13 cards per suit
         public Deck(int numSuits = 4, int numCardsPerSuit = 13) {
             Suits = numSuits;
@@ -17,11 +14,6 @@ namespace Engine {
             BuildDeck();
             Shuffle();
         }
-
-        ~Deck() {
-            cardDeck = null;
-        }
-
         //build the deck in order
         private void BuildDeck() {
             cardDeck = new Card[CardsPerSuit * Suits];
@@ -30,8 +22,6 @@ namespace Engine {
                     cardDeck[(y - 1) + (CardsPerSuit * (x - 1))] = new Card();
                     cardDeck[(y - 1) + (CardsPerSuit * (x - 1))].Suit = x;
                     cardDeck[(y - 1) + (CardsPerSuit * (x - 1))].Number = y;
-                    cardDeck[(y - 1) + (CardsPerSuit * (x - 1))].Picture = 
-                        (Image)Resources.GetObject(cardDeck[(y - 1) + (CardsPerSuit * (x - 1))].GetImageName());
                 }
             }
         }

@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Drawing;
-using System.Resources;
 
 namespace Engine {
     public class Card : IEquatable<Card> {//IComparable, IEquatable<Card> {
         public int Suit { get; set; }
         public int Number { get; set; }
-        public Image Picture { get; set; }
-        
         //set up a default card object, with optional overloads to set the suit and number
-        public Card(int Suit = 0, int Number = 0, Image picture = null) {
+        public Card(int Suit = 0, int Number = 0) {
             this.Suit = Suit;
             this.Number = Number;
-            this.Picture = picture;
         }
         //allow the card to be output as a string value
         public override string ToString() {
@@ -46,15 +41,6 @@ namespace Engine {
                 cardNum = "Unknown Number";
             }
             return cardNum + " of " + cardSuit;
-        }
-        //allow the card to be output as a string value
-        public string GetImageName() {
-            string name = this.ToString();
-            name = name.Replace(' ', '_');
-            if (Number == 1 || Number > 10) {
-                return name;
-            }
-            return '_' + name;
         }
         // the logic required to be able to compare cards to each other
         public override bool Equals(Object obj) {
