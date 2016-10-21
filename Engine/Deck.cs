@@ -4,9 +4,9 @@ using System.Drawing;
 
 namespace Engine {
     public class Deck {
-        private Card[] cardDeck;
-        private int Suits;
-        private int CardsPerSuit;
+		private Card[] cardDeck { get; set; }
+		private int Suits { get; set; }
+		private int CardsPerSuit { get; set; }
         public int DeckSize { get; set; }
         private ResourceManager Resources = Properties.Resources.ResourceManager;
         //default deck call with 4 suits and 13 cards per suit

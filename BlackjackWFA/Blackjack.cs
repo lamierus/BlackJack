@@ -60,7 +60,9 @@ namespace BlackjackWFA {
         /// <param name="e"></param>
         private void Blackjack_Activated(object sender, EventArgs e) {
             if (!PlayingGame) {
+				PlayingGame = true;
                 RequestDeal();
+				StartGame();
             }
         }
 
@@ -70,7 +72,7 @@ namespace BlackjackWFA {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Blackjack_Load(object sender, EventArgs e) {
-            using (var form = new NewGame(Player1, Decks)) {
+            /*using (var form = new NewGame(Player1, Decks)) {
                 var result = form.ShowDialog();
                 if (result == DialogResult.Cancel) {
                     Close();
@@ -84,7 +86,7 @@ namespace BlackjackWFA {
             }
             lblPlayerHand.Text = Player1.Name + "\'s Hand";
             PlayingGame = true;
-            StartGame();
+            StartGame();*/
         }
 
         /// <summary>
@@ -105,7 +107,6 @@ namespace BlackjackWFA {
             }
             lblPlayerHand.Text = Player1.Name + "\'s Hand";
             PlayingGame = true;
-            StartGame();
         }
         
         /// <summary>
@@ -128,7 +129,7 @@ namespace BlackjackWFA {
         ///     clear the hand and blank out the picture boxes in the groupbox for the chosen hand
         /// </summary>
         /// <param name="hand"></param>
-        /// <param name="gBox"></param>
+        /// <param name="picBox"></param>
         private void BlankHand(BJPlayer hand, List<PictureBox> picBox) {
             hand.ClearHand();
             foreach (PictureBox pb in picBox) {

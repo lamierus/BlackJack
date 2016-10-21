@@ -9,10 +9,10 @@ namespace Engine {
         public Image Picture { get; set; }
         
         //set up a default card object, with optional overloads to set the suit and number
-        public Card(int Suit = 0, int Number = 0, Image picture = null) {
-            this.Suit = Suit;
-            this.Number = Number;
-            this.Picture = picture;
+        public Card(int suit = 0, int number = 0, Image picture = null) {
+            Suit = suit;
+            Number = number;
+            Picture = picture;
         }
         //allow the card to be output as a string value
         public override string ToString() {
@@ -54,7 +54,7 @@ namespace Engine {
             if (Number == 1 || Number > 10) {
                 return name;
             }
-            return '_' + name;
+			return name;//'_' + name;
         }
         // the logic required to be able to compare cards to each other
         public override bool Equals(Object obj) {

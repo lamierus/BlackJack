@@ -24,6 +24,7 @@ namespace Engine {
             CardsInDiscard = 0;
             BuildDecks();
         }
+
         //Function to build and shuffle the decks into the Shoe Queue
         private void BuildDecks() {
             Deck[] cardDecks = new Deck[NumDecks];
